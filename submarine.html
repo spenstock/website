@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   
+ <style>
+     #myCanvas {
+         border: 1px solid black;
+     }
+ </style>
+   <title>Canvas</title>
+  <meta charset="utf-8"/>
+ </head>
+<body onload="init();">
+    <canvas id="myCanvas" width="400" height="400">
+            Your browser does not support the canvas tag.
+    </canvas>
+<script id="jsbin-javascript">
+var canvas = document.querySelector("#myCanvas");
+var context = canvas.getContext("2d");
+
+var canvasPos = getPosition(canvas);
+var mouseX = 0;
+var mouseY = 0;
+var sqSize = 40;
+var xPos = canvas.width/2 + 10;
+var yPos = 30;
+var dX = 0;
+var dY = 0;
+var oldMouseX = canvas.width/2 + 10;
+var oldMouseY = 100;
+
+var down = 0;
+var hitWeed = 0;
+var gold = 0;
+
+function init(){
+canvas.addEventListener("mousemove", setMousePosition, false);
+canvas.addEventListener("mousedown", mouseDown, false);
+document.body.addEventListener("mouseup", mouseUp, false);
+requestAnimationFrame(animate);
+}
+function setMousePosition(e) {
+mouseX = e.clientX - canvasPos.x;
+mouseY = e.clientY - canvasPos.y;
+}
+function mouseDown() {
+  mouseIsDown = 1;
+  oldMouseX = mouseX;
+  oldMouseY = mouseY;
+}
+function mouseUp() {
+  mouseIsDown = 0;
+}
+
+function animate() {
+drawSomething();
+displayGold()
+
+down = yPos+20;  
+  
+  
+dX = oldMouseX - xPos;
+dY = oldMouseY - yPos;
+
+xPos += (dX / 15);
+yPos += (dY / 15);
+
+//context.clearRect(0, 0, canvas.width, canvas.height);
+
+context.fillStyle = "#00CCFF";
+hitObject();
+context.fillRect(xPos - sqSize / 2,
+yPos - sqSize / 2,
+sqSize,
+sqSize);
+
+  
+  
+requestAnimationFrame(animate);  
+}
+   function drawSomething() {
+     // draw a red rectangle
+     // animate
+
+        context.fillStyle='#F1F1F0';     
+        context.fillRect(0,0 - down, canvas.width, canvas.height);
+     
+        context.fillStyle='skyblue';
+        context.fillRect(0,100 - down,canvas.width,290);
+     
+        context.fillStyle='#3366FF';
+        context.fillRect(0,200 - down,canvas.width,300);
+     
+        context.fillStyle='#0000FF';
+        context.fillRect(0,300 - down,canvas.width,9000);
+     drawShip();
+     if (hitWeed) {
+       backpackWeed();
+     }
+     drawWeed();
+   }
+   function drawShip() {
+      context.fillStyle='#6E2C00';
+      context.fillRect(canvas.width/2 - 30,65 - down,80,35);
+     
+      context.fillStyle='#6E2C00';
+      context.fillRect(canvas.width/2 - 40,65 - down,100,20);  
+     
+      context.fillStyle='#6E2C00';
+      context.fillRect(canvas.width/2 + 5,5 - down,10,95);
+   }
+   function drawWeed() {
+      context.fillStyle='green';
+      context.fillRect(canvas.width/2 +5,620 - down,20,20);
+   }
+   function backpackWeed() {
+     context.fillStyle='green';
+     context.fillRect(10,10,20,20);  
+   }
+   function hitObject() {
+        context.fillStyle='yellow';
+        if(oldMouseX < canvas.width/2 + 70 && oldMouseX > canvas.width/2 - 50){
+          context.fillStyle='green';  
+          if(oldMouseY > 485 - down) {
+            context.fillStyle='purple';
+            hitWeed = 1;
+          }
+          if(oldMouseY < 65 - down) {
+            context.fillStyle='red';
+            if(hitWeed > 0){
+              gold += 1;
+              hitWeed = 0;
+            }
+          }
+        }    
+     
+   }
+  function displayGold() {
+       context.font = "24pt Helvetica";
+       context.textAlign = "center";
+       context.textBaseline = "middle";
+       context.fillStyle = "	rgb(255,215,0)";
+//      ctx.clearRect(0, 0, canvas.width, canvas.height);
+       context.fillText(gold, 50, 50, 50);
+
+}
+
+// deal with the page getting resized or scrolled
+window.addEventListener("scroll", updatePosition, false);
+window.addEventListener("resize", updatePosition, false);
+
+function updatePosition() {
+canvasPos = getPosition(canvas);
+}
+
+// Helper function to get an element's exact position
+function getPosition(el) {
+var xPos = 0;
+var yPos = 0;
+
+while (el) {
+if (el.tagName == "BODY") {
+// deal with browser quirks with body/window/document and page scroll
+var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+var yScroll = el.scrollTop || document.documentElement.scrollTop;
+
+xPos += (el.offsetLeft - xScroll + el.clientLeft);
+yPos += (el.offsetTop - yScroll + el.clientTop);
+} else {
+// for all other non-BODY elements
+xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+}
+
+el = el.offsetParent;
+}
+return {
+x: xPos,
+y: yPos
+};
+}
+</script>
+
+
+
+<script id="jsbin-source-javascript" type="text/javascript">var canvas = document.querySelector("#myCanvas");
+var context = canvas.getContext("2d");
+
+var canvasPos = getPosition(canvas);
+var mouseX = 0;
+var mouseY = 0;
+var sqSize = 40;
+var xPos = canvas.width/2 + 10;
+var yPos = 30;
+var dX = 0;
+var dY = 0;
+var oldMouseX = canvas.width/2 + 10;
+var oldMouseY = 100;
+
+var down = 0;
+var hitWeed = 0;
+var gold = 0;
+
+function init(){
+canvas.addEventListener("mousemove", setMousePosition, false);
+canvas.addEventListener("mousedown", mouseDown, false);
+document.body.addEventListener("mouseup", mouseUp, false);
+requestAnimationFrame(animate);
+}
+function setMousePosition(e) {
+mouseX = e.clientX - canvasPos.x;
+mouseY = e.clientY - canvasPos.y;
+}
+function mouseDown() {
+  mouseIsDown = 1;
+  oldMouseX = mouseX;
+  oldMouseY = mouseY;
+}
+function mouseUp() {
+  mouseIsDown = 0;
+}
+
+function animate() {
+drawSomething();
+displayGold()
+
+down = yPos+20;  
+  
+  
+dX = oldMouseX - xPos;
+dY = oldMouseY - yPos;
+
+xPos += (dX / 15);
+yPos += (dY / 15);
+
+//context.clearRect(0, 0, canvas.width, canvas.height);
+
+context.fillStyle = "#00CCFF";
+hitObject();
+context.fillRect(xPos - sqSize / 2,
+yPos - sqSize / 2,
+sqSize,
+sqSize);
+
+  
+  
+requestAnimationFrame(animate);  
+}
+   function drawSomething() {
+     // draw a red rectangle
+     // animate
+
+        context.fillStyle='#F1F1F0';     
+        context.fillRect(0,0 - down, canvas.width, canvas.height);
+     
+        context.fillStyle='skyblue';
+        context.fillRect(0,100 - down,canvas.width,290);
+     
+        context.fillStyle='#3366FF';
+        context.fillRect(0,200 - down,canvas.width,300);
+     
+        context.fillStyle='#0000FF';
+        context.fillRect(0,300 - down,canvas.width,9000);
+     drawShip();
+     if (hitWeed) {
+       backpackWeed();
+     }
+     drawWeed();
+   }
+   function drawShip() {
+      context.fillStyle='#6E2C00';
+      context.fillRect(canvas.width/2 - 30,65 - down,80,35);
+     
+      context.fillStyle='#6E2C00';
+      context.fillRect(canvas.width/2 - 40,65 - down,100,20);  
+     
+      context.fillStyle='#6E2C00';
+      context.fillRect(canvas.width/2 + 5,5 - down,10,95);
+   }
+   function drawWeed() {
+      context.fillStyle='green';
+      context.fillRect(canvas.width/2 +5,620 - down,20,20);
+   }
+   function backpackWeed() {
+     context.fillStyle='green';
+     context.fillRect(10,10,20,20);  
+   }
+   function hitObject() {
+        context.fillStyle='yellow';
+        if(oldMouseX < canvas.width/2 + 70 && oldMouseX > canvas.width/2 - 50){
+          context.fillStyle='green';  
+          if(oldMouseY > 485 - down) {
+            context.fillStyle='purple';
+            hitWeed = 1;
+          }
+          if(oldMouseY < 65 - down) {
+            context.fillStyle='red';
+            if(hitWeed > 0){
+              gold += 1;
+              hitWeed = 0;
+            }
+          }
+        }    
+     
+   }
+  function displayGold() {
+       context.font = "24pt Helvetica";
+       context.textAlign = "center";
+       context.textBaseline = "middle";
+       context.fillStyle = "	rgb(255,215,0)";
+//      ctx.clearRect(0, 0, canvas.width, canvas.height);
+       context.fillText(gold, 50, 50, 50);
+
+}
+
+// deal with the page getting resized or scrolled
+window.addEventListener("scroll", updatePosition, false);
+window.addEventListener("resize", updatePosition, false);
+
+function updatePosition() {
+canvasPos = getPosition(canvas);
+}
+
+// Helper function to get an element's exact position
+function getPosition(el) {
+var xPos = 0;
+var yPos = 0;
+
+while (el) {
+if (el.tagName == "BODY") {
+// deal with browser quirks with body/window/document and page scroll
+var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+var yScroll = el.scrollTop || document.documentElement.scrollTop;
+
+xPos += (el.offsetLeft - xScroll + el.clientLeft);
+yPos += (el.offsetTop - yScroll + el.clientTop);
+} else {
+// for all other non-BODY elements
+xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+}
+
+el = el.offsetParent;
+}
+return {
+x: xPos,
+y: yPos
+};
+} </script></body>
+</html>
