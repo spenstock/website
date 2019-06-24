@@ -1,25 +1,113 @@
 <!DOCTYPE html>
-<html>
-    <head>
-    </head>
+<html lang="en">  
+<head>
+  <meta charset="utf-8">
+  <title>Blog</title>
+  <style>
+    header, footer {
+      margin: 0.2em;
+      padding: 0.5em;
+      background-color: rgb(33, 106, 202);
+      text-align: center;
+    }  
+    h3 {
+        font-size: 14px;
+    }
+    .row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+    }    
+    nav {
+    margin: 0.2em;
+	min-height: 8em;
+	padding: 0.5em;  
+    width: 15%;
+    background-color: lightgreen;
+    text-align: center;  
+    }
+    .column {
+	margin: 0.2em;
+	min-height: 8em;
+	padding: 1em;
+	width: 65%;
+    background-color: lightBlue;  
+    }
+    aside {
+	margin: 0.2em;
+	min-height: 8em;
+	padding: 1em;
+	width: 15%;
+    background-color: lightskyblue;
+    }
+    a {
+      text-decoration: none;
+    }
+    a:hover {
+      color: red;
+    }
+    body {
+    background-color: lightgreen;
+    }
+  
+    p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+    color: black;
+    }
+  </style>
+</head>
 <body>
-    <h1>6/22/19</h1>
-    <p>So I decided to create editor's notes to talk about what's up<br/>
-    The current plan is to create an arcade on this website, using the square blocks premade<br/>
-    <img src="Capture.JPG" alt="website" width="500" height="333"> <br/>
-    Probably spent 8 hours on the first game today, with probably 4.5 the day before that<br/>
-    and 6 before that. So we're at like 18.5 hours which has gone crazy fast. <br/>
-    Was up till 3 last night so I'm focused on this project.<br/>
-    Most of this time was spent on the movement of the submarine, and how it moved with the mouse<br/>
+  <header>
+    <h1>Blog</h1>    
+  </header>
+  
+<div class="row">
+  <nav>    
+    <h3>Posts:</h3><br>          
+    <strong>
+    <a href="#6/23/19">Beginnings and Blog</a> <br>
+    <a href="#6/22/19">Beginnings and Submarines</a>
+    </strong>
+  </nav>
+  <main class="column">
+  <article><h2><a id=6/23/19>Beginnings and Blog</a></h2>
+    <h4>6/22/19</h4>
+    <p>Blog was created, looks good I would say. <br>
+    Work was done today with the game to make the screen move when the box was near the edges in submarine game. <br>
+    That looks good too.<br>
+    Still need to work with colors...<br>
+    -Spencer</p>
+    </p>
+
+  </article>
+  <article>
+  </article>
+  <article>
+    <h2><a id=6/22/19>Beginnings and Submarines</a></h2>
+    <h4>6/22/19</h4>
+    <p>So I decided to create editor's notes to talk about what's up<br>
+    The current plan is to create an arcade on this website, using the square blocks premade<br>
+    <img src="Capture.JPG" alt="website" width="500" height="333"> <br>
+    Probably spent 8 hours on the first game today, with probably 4.5 the day before that<br>
+    and 6 before that. So we're at like 18.5 hours which has gone crazy fast. <br>
+    Was up till 3 last night so I'm focused on this project.<br>
+    Most of this time was spent on the movement of the submarine, and how it moved with the mouse<br>
     some works in progress were: <a href="demo1.html" target="_blank"> before mouse </a> and
-    <a href="demo2.html" target="_blank"> before ship and basic detail </a>
-    <br/>
+    <a href="demo2.html" target="_blank"> before ship and basic detail </a> <br>
     Currently, I don't like how it looks, as you can just explore the entire map by just clicking near the top and the bottom of the canvas.<br/>
     There is just too much range. The next step will be keeping the submarine in the center of the screen, and just move the background.<br/>
-    I might get some hardware projects up here, stay tuned.<br/>
-    Thanks for reading<br/>
-    -Spencer<br/>
-    <br/>
-    </p>
-</body>
+    I might get some hardware projects up here, stay tuned.<br>
+    Thanks for reading<br>
+    -Spencer</p>
+  </article>
+  </main>  
+  <aside>
+    <p>Yeah I'll put something here</p>
+  </aside>
+</div>
+  <footer>June 2019 @ spenstock</footer>  
+ </body>
 </html>
+ 
