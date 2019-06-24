@@ -49,7 +49,7 @@ var hitWeed2 = 0;
 var hitWeed3 = 0;
 var hitWeed4 = 0;
 var hitWeed5 = 0;
-var gold = 5;
+var gold = 0;
 
 function init(){
 canvas.addEventListener("mousemove", setMousePosition, false);
@@ -86,7 +86,7 @@ function animate() {
        context.textBaseline = "middle";
        context.fillStyle = "rgb(255,215,0)";
        context.fillText("YOU WIN", 200, 200, 200);
-       //window.location.href = 'https://spenstock.gq/jungle.html';
+       window.location.href = 'https://spenstock.gq/jungle.html';
   }
   context.fillStyle = "yellow";
   dX = oldMouseX - xPos;
