@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by spenstock (http://jsbin.com/digecuj/9/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
 <html lang="en">
  <head>
    
@@ -40,7 +49,7 @@ var hitWeed2 = 0;
 var hitWeed3 = 0;
 var hitWeed4 = 0;
 var hitWeed5 = 0;
-var gold = 0;
+var gold = 5;
 
 function init(){
 canvas.addEventListener("mousemove", setMousePosition, false);
@@ -72,7 +81,12 @@ function animate() {
   
   //Check redirect (game win)
   if(gold > 4) {
-    window.location.href = 'https://spenstock.gq/jungle.html';
+       context.font = "40pt Helvetica";
+       context.textAlign = "center";
+       context.textBaseline = "middle";
+       context.fillStyle = "rgb(255,215,0)";
+       context.fillText("YOU WIN", 200, 200, 200);
+       //window.location.href = 'https://spenstock.gq/jungle.html';
   }
   context.fillStyle = "yellow";
   dX = oldMouseX - xPos;
@@ -177,6 +191,14 @@ function animate() {
      
       context.fillStyle='#6E2C00';
       context.fillRect(canvas.width/2 + 5,5,10,95);
+      
+      context.fillStyle='lightgrey';
+      context.beginPath();
+      context.moveTo(215, 10);
+      context.lineTo(215, 60);
+      context.lineTo(250, 60);
+      context.fill();
+     
       if(xPos +  sqSize / 2 > (canvas.width/2 - 40) && xPos - sqSize / 2 < (canvas.width/2 + 60) && yPos +  sqSize / 2 > (20) && yPos - sqSize / 2 < (85)) {
         if(hitWeed1 == 1) {
            gold += 1;
