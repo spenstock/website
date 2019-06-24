@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by spenstock (http://jsbin.com/digecuj/7/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
 <html lang="en">
  <head>
    
@@ -29,8 +38,17 @@ var dY = 0;
 var oldMouseX = canvas.width/2 + 10;
 var oldMouseY = 100;
 
+var mapX = 0;
+var mapY = 0;
+var hitMap = 0;
+
 var down = 0;
-var hitWeed = 0;
+var right = 0;
+var hitWeed1 = 0;
+var hitWeed2 = 0;
+var hitWeed3 = 0;
+var hitWeed4 = 0;
+var hitWeed5 = 0;
 var gold = 0;
 
 function init(){
@@ -53,97 +71,218 @@ function mouseUp() {
 }
 
 function animate() {
-drawSomething();
-displayGold()
-
-down = yPos+20;  
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  calculateMapPosition(); 
+  drawBackground();
+  displayGold();
   
+  //Check redirect (game win)
+  if(gold > 4) {
+    window.location.href = 'https://spenstock.gq/jungle.html';
+  }
+  context.fillStyle = "yellow";
+  dX = oldMouseX - xPos;
+  dY = oldMouseY - yPos;
+
+  xPos += (dX / 18);
+  yPos += (dY / 18);
+
+  context.fillRect(xPos - sqSize / 2,
+  yPos - sqSize / 2,
+  sqSize,
+  sqSize);
   
-dX = oldMouseX - xPos;
-dY = oldMouseY - yPos;
-
-xPos += (dX / 23);
-yPos += (dY / 23);
-
-//context.clearRect(0, 0, canvas.width, canvas.height);
-
-context.fillStyle = "#00CCFF";
-hitObject();
-context.fillRect(xPos - sqSize / 2,
-yPos - sqSize / 2,
-sqSize,
-sqSize);
-
-  
-  
-requestAnimationFrame(animate);  
+  requestAnimationFrame(animate);  
 }
-   function drawSomething() {
-     // draw a red rectangle
-     // animate
-
-        context.fillStyle='#F1F1F0';     
-        context.fillRect(0,0 - down, canvas.width, canvas.height);
-     
-        context.fillStyle='skyblue';
-        context.fillRect(0,100 - down,canvas.width,290);
-     
-        context.fillStyle='#3366FF';
-        context.fillRect(0,200 - down,canvas.width,300);
-     
-        context.fillStyle='#0000FF';
-        context.fillRect(0,300 - down,canvas.width,9000);
-     drawShip();
-     if (hitWeed) {
-       backpackWeed();
+   function calculateMapPosition() {
+     if(oldMouseY > 380) {
+       down += canvas.height;
+       oldMouseY -= 360;
+       yPos = oldMouseY;
+       xPos = oldMouseX;
+       mapY -= 1;
      }
-     drawWeed();
+     else if(oldMouseY < 20) {
+       down -= canvas.height;
+       oldMouseY += 360;
+       yPos = oldMouseY;
+       xPos = oldMouseX;
+       mapY += 1;
+     }
+     if(oldMouseX > 380) {
+       right += canvas.width;
+       oldMouseX -= 360;
+       yPos = oldMouseY;
+       xPos = oldMouseX;
+       mapX += 1;
+     }
+     else if(oldMouseX < 20) {
+       right -= canvas.width;
+       oldMouseX += 360;
+       yPos = oldMouseY;
+       xPos = oldMouseX;
+       mapX -= 1;
+     }
+   }  
+
+   function drawBackground() {
+        if (mapY === 0) {
+          context.fillStyle='#F1F1F0';     
+          context.fillRect(0,0, canvas.width, canvas.height);
+     
+          context.fillStyle='skyblue';
+          context.fillRect(0,100,canvas.width,canvas.height);
+     
+          context.fillStyle='#3366FF';
+          context.fillRect(0,250,canvas.width,canvas.height);
+     
+//           context.fillStyle='#0000FF';
+//           context.fillRect(0,300,canvas.width,canvas.height);
+        }
+        if(mapY == -1) {
+          context.fillStyle='#3366FF';
+          context.fillRect(0,0,canvas.width,canvas.height);
+          
+          context.fillStyle='#0000FF';
+          context.fillRect(0,100,canvas.width,canvas.height);  
+        }
+        if(mapY < -1) {
+          context.fillStyle='#0000FF';
+          context.fillRect(0,0,canvas.width,canvas.height);  
+        }
+        if(mapY === 0 && mapX === 0){
+          drawShip();
+        }
+        if(mapY === -1 && mapX === 0 && hitMap < 1){
+          drawMap();
+        }
+     
+        if(mapY === -1 && mapX == -2 && hitWeed1 < 1){
+          drawWeed1();
+        }
+        if(mapY === -2 && mapX == -1 && hitWeed2 < 1){
+          drawWeed2();
+        }     
+        if(mapY === -2 && mapX === 0 && hitWeed3 < 1){
+          drawWeed3();
+        }
+        if(mapY === -2 && mapX == 1 && hitWeed4 < 1){
+          drawWeed4();
+        }
+        if(mapY === 0 && mapX == 2 && hitWeed5 < 1){
+          drawWeed5();
+        }
+        backpackWeed();
    }
    function drawShip() {
       context.fillStyle='#6E2C00';
-      context.fillRect(canvas.width/2 - 30,65 - down,80,35);
+      context.fillRect(canvas.width/2 - 30,65,80,35);
      
       context.fillStyle='#6E2C00';
-      context.fillRect(canvas.width/2 - 40,65 - down,100,20);  
+      context.fillRect(canvas.width/2 - 40,65,100,20);  
      
       context.fillStyle='#6E2C00';
-      context.fillRect(canvas.width/2 + 5,5 - down,10,95);
+      context.fillRect(canvas.width/2 + 5,5,10,95);
+      if(xPos +  sqSize / 2 > (canvas.width/2 - 40) && xPos - sqSize / 2 < (canvas.width/2 + 60) && yPos +  sqSize / 2 > (20) && yPos - sqSize / 2 < (85)) {
+        if(hitWeed1 > 0) {
+           gold += 1;
+           hitWeed1 = 0;
+        }
+        if(hitWeed2 > 0) {
+           gold += 1;
+           hitWeed2 = 0;
+        }
+        if(hitWeed3 > 0) {
+           gold += 1;
+           hitWeed3 = 0;
+        }
+        if(hitWeed4 > 0) {
+           gold += 1;
+           hitWeed4 = 0;
+        }
+        if(hitWeed5 > 0) {
+           gold += 1;
+           hitWeed5 = 0;
+        }
+      }
    }
-   function drawWeed() {
+   function drawMap() {
+      context.fillStyle='brown';
+      context.fillRect(canvas.width/2 + 5,300,20,20);
+      if(xPos +  sqSize / 2 > canvas.width/2 + 5 && xPos - sqSize / 2 < canvas.width/2 + 35 && yPos +  sqSize / 2 > 300 && yPos - sqSize / 2 < 320) {
+        hitMap = 1;
+      }      
+   }
+   function drawWeed1() {
       context.fillStyle='green';
-      context.fillRect(canvas.width/2 +5,620 - down,20,20);
+      context.fillRect(canvas.width/2 +5,300,20,20);
+      if(xPos +  sqSize / 2 > canvas.width/2 + 5 && xPos - sqSize / 2 < canvas.width/2 + 35 && yPos +  sqSize / 2 > 300 && yPos - sqSize / 2 < 320) {
+        hitWeed1 = 1;
+      }
+   }
+   function drawWeed2() {
+      context.fillStyle='green';
+      context.fillRect(canvas.width/2 +5,300,20,20);
+      if(xPos +  sqSize / 2 > canvas.width/2 + 5 && xPos - sqSize / 2 < canvas.width/2 + 35 && yPos +  sqSize / 2 > 300 && yPos - sqSize / 2 < 320) {
+        hitWeed2 = 1;
+      }
+   }
+   function drawWeed3() {
+      context.fillStyle='green';
+      context.fillRect(canvas.width/2 +5,300,20,20);
+      if(xPos +  sqSize / 2 > canvas.width/2 + 5 && xPos - sqSize / 2 < canvas.width/2 + 35 && yPos +  sqSize / 2 > 300 && yPos - sqSize / 2 < 320) {
+        hitWeed3 = 1;
+      }
+   }
+   function drawWeed4() {
+      context.fillStyle='green';
+      context.fillRect(canvas.width/2 +5,300,20,20);
+      if(xPos +  sqSize / 2 > canvas.width/2 + 5 && xPos - sqSize / 2 < canvas.width/2 + 35 && yPos +  sqSize / 2 > 300 && yPos - sqSize / 2 < 320) {
+        hitWeed4 = 1;
+      }
+   }
+   function drawWeed5() {
+      context.fillStyle='green';
+      context.fillRect(canvas.width/2 +5,300,20,20);
+      if(xPos +  sqSize / 2 > canvas.width/2 + 5 && xPos - sqSize / 2 < canvas.width/2 + 35 && yPos +  sqSize / 2 > 300 && yPos - sqSize / 2 < 320) {
+        hitWeed5 = 1;
+      }
    }
    function backpackWeed() {
+     if(hitWeed1 > 0) {
      context.fillStyle='green';
-     context.fillRect(10,10,20,20);  
-   }
-   function hitObject() {
-        context.fillStyle='yellow';
-        if(oldMouseX < canvas.width/2 + 70 && oldMouseX > canvas.width/2 - 50){
-          context.fillStyle='green';  
-          if(oldMouseY > 485 - down) {
-            context.fillStyle='purple';
-            hitWeed = 1;
-          }
-          if(oldMouseY < 65 - down) {
-            context.fillStyle='red';
-            if(hitWeed > 0){
-              gold += 1;
-              hitWeed = 0;
-            }
-          }
-        }    
-     
+     context.fillRect(10,10,20,20); 
+     }
+     if(hitWeed2 > 0) {
+     context.fillStyle='green';
+     context.fillRect(40,10,20,20); 
+     }
+     if(hitWeed3 > 0) {
+     context.fillStyle='green';
+     context.fillRect(70,10,20,20); 
+     }
+     if(hitWeed4 > 0) {
+     context.fillStyle='green';
+     context.fillRect(100,10,20,20); 
+     }
+     if(hitWeed5 > 0) {
+     context.fillStyle='green';
+     context.fillRect(130,10,20,20); 
+     }
    }
   function displayGold() {
        context.font = "24pt Helvetica";
        context.textAlign = "center";
        context.textBaseline = "middle";
-       context.fillStyle = "	rgb(255,215,0)";
-//      ctx.clearRect(0, 0, canvas.width, canvas.height);
+       context.fillStyle = "rgb(255,215,0)";
        context.fillText(gold, 50, 50, 50);
-
-}
+       if(hitMap) {     
+         context.fillStyle = "rgb(0,0,0)";
+         context.font = "12pt Helvetica";    
+         context.fillText("Map:", 378, 15, 150);
+         context.fillText(mapX + "," + mapY, 378, 32, 150);
+       }
+  }
 
 // deal with the page getting resized or scrolled
 window.addEventListener("scroll", updatePosition, false);
@@ -178,173 +317,7 @@ return {
 x: xPos,
 y: yPos
 };
-}
+} 
 </script>
-
-
-
-<script id="jsbin-source-javascript" type="text/javascript">var canvas = document.querySelector("#myCanvas");
-var context = canvas.getContext("2d");
-
-var canvasPos = getPosition(canvas);
-var mouseX = 0;
-var mouseY = 0;
-var sqSize = 40;
-var xPos = canvas.width/2 + 10;
-var yPos = 30;
-var dX = 0;
-var dY = 0;
-var oldMouseX = canvas.width/2 + 10;
-var oldMouseY = 100;
-
-var down = 0;
-var hitWeed = 0;
-var gold = 0;
-
-function init(){
-canvas.addEventListener("mousemove", setMousePosition, false);
-canvas.addEventListener("mousedown", mouseDown, false);
-document.body.addEventListener("mouseup", mouseUp, false);
-requestAnimationFrame(animate);
-}
-function setMousePosition(e) {
-mouseX = e.clientX - canvasPos.x;
-mouseY = e.clientY - canvasPos.y;
-}
-function mouseDown() {
-  mouseIsDown = 1;
-  oldMouseX = mouseX;
-  oldMouseY = mouseY;
-}
-function mouseUp() {
-  mouseIsDown = 0;
-}
-
-function animate() {
-drawSomething();
-displayGold()
-
-down = yPos+20;  
-  
-  
-dX = oldMouseX - xPos;
-dY = oldMouseY - yPos;
-
-xPos += (dX / 15);
-yPos += (dY / 15);
-
-//context.clearRect(0, 0, canvas.width, canvas.height);
-
-context.fillStyle = "#00CCFF";
-hitObject();
-context.fillRect(xPos - sqSize / 2,
-yPos - sqSize / 2,
-sqSize,
-sqSize);
-
-  
-  
-requestAnimationFrame(animate);  
-}
-   function drawSomething() {
-     // draw a red rectangle
-     // animate
-
-        context.fillStyle='#F1F1F0';     
-        context.fillRect(0,0 - down, canvas.width, canvas.height);
-     
-        context.fillStyle='skyblue';
-        context.fillRect(0,100 - down,canvas.width,290);
-     
-        context.fillStyle='#3366FF';
-        context.fillRect(0,200 - down,canvas.width,300);
-     
-        context.fillStyle='#0000FF';
-        context.fillRect(0,300 - down,canvas.width,9000);
-     drawShip();
-     if (hitWeed) {
-       backpackWeed();
-     }
-     drawWeed();
-   }
-   function drawShip() {
-      context.fillStyle='#6E2C00';
-      context.fillRect(canvas.width/2 - 30,65 - down,80,35);
-     
-      context.fillStyle='#6E2C00';
-      context.fillRect(canvas.width/2 - 40,65 - down,100,20);  
-     
-      context.fillStyle='#6E2C00';
-      context.fillRect(canvas.width/2 + 5,5 - down,10,95);
-   }
-   function drawWeed() {
-      context.fillStyle='green';
-      context.fillRect(canvas.width/2 +5,620 - down,20,20);
-   }
-   function backpackWeed() {
-     context.fillStyle='green';
-     context.fillRect(10,10,20,20);  
-   }
-   function hitObject() {
-        context.fillStyle='yellow';
-        if(oldMouseX < canvas.width/2 + 70 && oldMouseX > canvas.width/2 - 50){
-          context.fillStyle='green';  
-          if(oldMouseY > 485 - down) {
-            context.fillStyle='purple';
-            hitWeed = 1;
-          }
-          if(oldMouseY < 65 - down) {
-            context.fillStyle='red';
-            if(hitWeed > 0){
-              gold += 1;
-              hitWeed = 0;
-            }
-          }
-        }    
-     
-   }
-  function displayGold() {
-       context.font = "24pt Helvetica";
-       context.textAlign = "center";
-       context.textBaseline = "middle";
-       context.fillStyle = "	rgb(255,215,0)";
-//      ctx.clearRect(0, 0, canvas.width, canvas.height);
-       context.fillText(gold, 50, 50, 50);
-
-}
-
-// deal with the page getting resized or scrolled
-window.addEventListener("scroll", updatePosition, false);
-window.addEventListener("resize", updatePosition, false);
-
-function updatePosition() {
-canvasPos = getPosition(canvas);
-}
-
-// Helper function to get an element's exact position
-function getPosition(el) {
-var xPos = 0;
-var yPos = 0;
-
-while (el) {
-if (el.tagName == "BODY") {
-// deal with browser quirks with body/window/document and page scroll
-var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
-var yScroll = el.scrollTop || document.documentElement.scrollTop;
-
-xPos += (el.offsetLeft - xScroll + el.clientLeft);
-yPos += (el.offsetTop - yScroll + el.clientTop);
-} else {
-// for all other non-BODY elements
-xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
-yPos += (el.offsetTop - el.scrollTop + el.clientTop);
-}
-
-el = el.offsetParent;
-}
-return {
-x: xPos,
-y: yPos
-};
-} </script></body>
+</body>
 </html>
