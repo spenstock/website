@@ -3,7 +3,7 @@
 Created using JS Bin
 http://jsbin.com
 
-Copyright (c) 2019 by spenstock (http://jsbin.com/velakat/8/edit)
+Copyright (c) 2019 by spenstock (http://jsbin.com/vubimo/4/edit)
 
 Released under the MIT license: http://jsbin.mit-license.org
 -->
@@ -30,6 +30,7 @@ var context = canvas.getContext("2d");
 var canvasPos = getPosition(canvas);
 var mouseX = 0;
 var mouseY = 0;
+var clickSpeedRange = 65;
 var sqSize = 20;
 var xPos = 0;
 var yPos = 200;
@@ -37,10 +38,13 @@ var dX = 0;
 var dY = 0;
 var oldMouseX = 0;
 var oldMouseY = 200;
-var grav = 0.325;
+var grav = 0.4;
 var Yspeed = 0;
 var level = 0;
 var y1, y2, x1, x2 = 0;
+var stage = 0;
+var rainSpeed = 0;
+var test = 0;
 
 function init(){
 canvas.addEventListener("mousemove", setMousePosition, false);
@@ -62,22 +66,20 @@ function mouseUp() {
 }
 
 function animate() { 
-
 dX = oldMouseX - xPos;
 dY = oldMouseY - yPos;
   
-  
-if (dX >= 75){
-   dX = 75;
+if (dX >= clickSpeedRange){
+   dX = clickSpeedRange;
 }
-if (dX >= 75){
-   dX = 75;
+if (dX >= clickSpeedRange){
+   dX = clickSpeedRange;
 }  
-if (dY <= -75){
-   dY = -75;
+if (dY <= -clickSpeedRange){
+   dY = -clickSpeedRange;
 }
-if (dX <= -75){
-   dX = -75;
+if (dX <= -clickSpeedRange){
+   dX = -clickSpeedRange;
 }  
   
 Yspeed -= grav;
@@ -88,10 +90,15 @@ yPos += (dY / 15);
 if (yPos < 380) {
    yPos -= Yspeed;
 }
+  
 vertSpeed = Yspeed-dY/15
 
-context.clearRect(0, 0, canvas.width, canvas.height);
+ context.clearRect(0, 0, canvas.width, canvas.height);
+
 background();
+if(stage === 0 || 1) {
+  rain()
+}
 platform();
   
 if (xPos >= 758 && yPos >= 330) {
@@ -111,47 +118,41 @@ requestAnimationFrame(animate);
 }
 
 function background() {
-context.fillStyle = "skyblue";  
+context.fillStyle = "Gainsboro";  
 context.fillRect(0, 0, canvas.width, canvas.height);
-context.fillStyle = "#125711";   
+// context.fillStyle = "#125711";   
 
-context.fillRect(0-xPos/9, 0, 50, canvas.height);    
-context.fillRect(100-(xPos/12), 0, 50, canvas.height);
-context.fillRect(200-(xPos/18), 0, 50, canvas.height);
-context.fillRect(300-(xPos/12), 0, 50, canvas.height);
-context.fillRect(400-(xPos/12), 0, 50, canvas.height);
-context.fillRect(500-(xPos/12), 0, 50, canvas.height);
-context.fillRect(600-(xPos/12), 0, 50, canvas.height);  
-context.fillRect(700-(xPos/12), 0, 50, canvas.height);
-context.fillRect(800-(xPos/12), 0, 50, canvas.height);
-context.fillRect(900-(xPos/12), 0, 50, canvas.height);
-context.fillRect(1000-(xPos/12), 0, 50, canvas.height);
-context.fillStyle = "#016E00";  
-context.fillRect(170-(xPos/4.5), 0, 57, canvas.height);
-context.fillRect(223-(xPos/8), 0, 40, canvas.height);
-context.fillRect(350-(xPos/6), 0, 155, canvas.height);
-context.fillRect(690-(xPos/5), 0, 50, canvas.height);
-context.fillRect(590-(xPos/7), 0, 50, canvas.height);
-context.fillRect(790-(xPos/6), 0, 50, canvas.height);
-
+// context.fillRect(0-xPos/9, 0, 50, canvas.height);    
+// context.fillRect(100-(xPos/12), 0, 50, canvas.height);
+// context.fillRect(200-(xPos/18), 0, 50, canvas.height);
+// context.fillRect(300-(xPos/12), 0, 50, canvas.height);
+// context.fillRect(400-(xPos/12), 0, 50, canvas.height);
+// context.fillRect(500-(xPos/12), 0, 50, canvas.height);
+// context.fillRect(600-(xPos/12), 0, 50, canvas.height);  
+// context.fillRect(700-(xPos/12), 0, 50, canvas.height);
+// context.fillRect(800-(xPos/12), 0, 50, canvas.height);
+// context.fillRect(900-(xPos/12), 0, 50, canvas.height);
+// context.fillRect(1000-(xPos/12), 0, 50, canvas.height);
+// context.fillStyle = "#016E00";  
+// context.fillRect(170-(xPos/4.5), 0, 57, canvas.height);
+// context.fillRect(223-(xPos/8), 0, 40, canvas.height);
+// context.fillRect(350-(xPos/6), 0, 155, canvas.height);
+// context.fillRect(690-(xPos/5), 0, 50, canvas.height);
+// context.fillRect(590-(xPos/7), 0, 50, canvas.height);
+// context.fillRect(790-(xPos/6), 0, 50, canvas.height);
+context.fillStyle = "#F4E910";
 }
 
 function platform() {
-// context.fillStyle = "854A13";    
-createPlatform(230,120,30,30); 
-createPlatform(215,200,30,30);
-createPlatform(180,160,30,30);
-createPlatform(170,300,30,30);
-createPlatform(600,300,30,30);
-createPlatform(0,370,40,40);
-createPlatform(740,370,60,40);
+context.fillStyle = "#F8F8F8";    
+createPlatform(0,370,800,40);
 drawFlag(770,330);
   
-if (yPos >= 380) {
-   xPos = 20;
-   yPos = 360;
-   stop();
-}
+// if (yPos >= 380) {
+//    xPos = 20;
+//    yPos = 360;
+//    stop();
+// }
 // vine:
 // if (xPos +  sqSize / 2 > (200) && xPos - sqSize / 2 < (230) && yPos +  sqSize / 2 > (200) && yPos - sqSize / 2 < 230) {
 //    stop();  
@@ -177,7 +178,7 @@ function nextLevel() {
   context.fillStyle = "rgb(255,215,0)";
   context.fillText("YOU WIN", canvas.width/2, canvas.height/2, 800);
   context.fillText("MORE SOON", canvas.width/2, canvas.height/2 + 100, 800);
-  window.location.href = 'https://spenstock.gq/card.html';
+  //window.location.href = 'https://spenstock.gq/card.html';
 }
 
 function stop() {
@@ -195,6 +196,39 @@ function drawFlag(x1,y1) {
       context.fill();
       context.fillStyle='grey';     
       context.fillRect(x1-2, y1, 2,40 );
+      
+}
+
+function rain() {
+context.fillStyle = "#FFFFFF";  
+test = Math.floor((Math.random() * 40) + 1);
+  for (var j = 0; j < 20; j++) {
+    for (var i = 0; i < 40; i++) {
+     context.fillRect(i * 40 - rainSpeed, rainSpeed + j * 40 - 400, 1, 4);   
+     rainSpeed += 0.002;
+     if(Math.floor((Math.random() * 40) + 1) == 1) {
+         rainSpeed
+     }
+    }
+    
+//     for (i = 0; i < 20; i++) {
+//      context.fillRect(Math.floor((Math.random() * 2) + 1) + i * 40 + 5 + rainSpeed/90, rainSpeed + 40, 1, 5);   
+//      rainSpeed += 0.1;
+//     }
+  
+  
+  
+  
+    if(rainSpeed > 400) {
+     rainSpeed = 0;
+    }
+  }
+   test = 0;
+  
+//   if(Math.floor((Math.random() * 10) + 1) == 9) {
+//      context.fillRect(Math.floor((Math.random() * 2) + 1) + i * 40,rainSpeed, 100, 500);   
+//   }
+context.fillStyle = "#F4E910";  
 }
 
 // deal with the page getting resized or scrolled
