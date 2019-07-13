@@ -3,7 +3,7 @@
 Created using JS Bin
 http://jsbin.com
 
-Copyright (c) 2019 by spenstock (http://jsbin.com/monabib/13/edit)
+Copyright (c) 2019 by spenstock (http://jsbin.com/monabib/20/edit)
 
 Released under the MIT license: http://jsbin.mit-license.org
 -->
@@ -32,11 +32,11 @@ var mouseX = 0;
 var mouseY = 0;
 var clickSpeedRange = 65;
 var sqSize = 20;
-var xPos = 0;
+var xPos = 50;
 var yPos = 200;
 var dX = 0;
 var dY = 0;
-var oldMouseX = 0;
+var oldMouseX = 50;
 var oldMouseY = 200;
 var grav = 0.4;
 var Yspeed = 0;
@@ -97,15 +97,15 @@ if (yPos < 380) {
   
 vertSpeed = Yspeed-dY/15
 
- context.clearRect(0, 0, canvas.width, canvas.height);
-
+context.clearRect(0, 0, canvas.width, canvas.height);
 background();
-if(stage === 0 || 1) {
-  rain()
+if(stage == 1 || stage === 0) {
+  rain();
 }
 platform();
-  
-if (xPos >= 758 && yPos >= 330) {
+calculateMapPosition();
+context.fillText(stage, canvas.width/2, canvas.height/2, 800);  
+if (xPos >= 758 && yPos >= 330 && stage == 1) {
   nextLevel();
 }  
         context.font = "24pt Helvetica";
@@ -150,7 +150,9 @@ context.fillStyle = "#F4E910";
 function platform() {
 context.fillStyle = "#cccccc";    
 createPlatform(0,370,800,40);
+if(stage == 1) {
 drawFlag(770,330);
+}
   
 // if (yPos >= 380) {
 //    xPos = 20;
@@ -167,7 +169,7 @@ function createPlatform(x1,y1,x2,y2) {
   context.fillRect(x1, y1, x2, y2);
   
 if (xPos +  sqSize / 2 >= (x1) && xPos - sqSize / 2 <= (x1+x2) && yPos +  sqSize / 2 >= (y1) && yPos - sqSize / 2 <= y1+y2) {
-  if(vertSpeed <= 0 && yPos +  sqSize / 2 <= y1 + 6) {
+  if(vertSpeed <= 0 && yPos +  sqSize / 2 <= y1 + 20) {
    yPos = y1 - 10;
    stop();  
   }
@@ -182,7 +184,7 @@ function nextLevel() {
   context.fillStyle = "rgb(255,215,0)";
   context.fillText("YOU WIN", canvas.width/2, canvas.height/2, 800);
   context.fillText("MORE SOON", canvas.width/2, canvas.height/2 + 100, 800);
-  window.location.href = 'https://spenstock.gq/snow.html';
+  //window.location.href = 'https://spenstock.gq/snow.html';
 }
 
 function stop() {
@@ -201,6 +203,23 @@ function drawFlag(x1,y1) {
       context.fillStyle='grey';     
       context.fillRect(x1-2, y1, 2,40 );
 }
+
+function calculateMapPosition() {
+  if(xPos > 780 && stage < 2) {
+    oldMouseX -= 760;
+    oldMouseY = 350;
+    yPos = oldMouseY;
+    xPos = oldMouseX;
+    stage += 1;
+  }
+  if(xPos < 20 && stage > -2) {
+    oldMouseX += 760;
+    oldMouseY = 350;
+    yPos = oldMouseY;
+    xPos = oldMouseX;
+    stage -= 1;
+  }
+}  
 
 function rain() {
 context.fillStyle = "#FFFFFF";  
@@ -236,6 +255,10 @@ context.fillStyle = "#F4E910";
       context.lineTo(lightningXPos + 0, lightningYPos + 100);
       context.lineTo(lightningXPos + 40, lightningYPos);
       context.fill();
+      context.fillRect(lightningXPos - 15 ,lightningYPos + 250,30,120)
+      if(true){
+        
+      }
   }
 context.fillStyle = "#F4E910";  
 }
