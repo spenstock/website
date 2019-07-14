@@ -3,7 +3,7 @@
 Created using JS Bin
 http://jsbin.com
 
-Copyright (c) 2019 by spenstock (http://jsbin.com/monabib/20/edit)
+Copyright (c) 2019 by spenstock (http://jsbin.com/monabib/25/edit)
 
 Released under the MIT license: http://jsbin.mit-license.org
 -->
@@ -104,7 +104,13 @@ if(stage == 1 || stage === 0) {
 }
 platform();
 calculateMapPosition();
+  
+  
+// debug here:
 context.fillText(stage, canvas.width/2, canvas.height/2, 800);  
+  
+  
+  
 if (xPos >= 758 && yPos >= 330 && stage == 1) {
   nextLevel();
 }  
@@ -234,13 +240,13 @@ context.fillStyle = "#FFFFFF";
     }
   }
 context.fillStyle = "#F4E910";    
-  if(Math.floor((Math.random() * 100) + 1) == 9) {
+  if(Math.floor((Math.random() * 40) + 1) == 9) {
      lightning = 1;
-     setTimeout(reset, 800);
+     setTimeout(reset, 750);
      lightningSound.play();
      lightningXPos = Math.floor((Math.random() * 800) + 1);
      lightningYPos = Math.floor((Math.random() * 100) + 1);
-     //lightning random qualities
+     //lightning random qualities next? i.e width/height
   }
   if(lightning == 1) {
       context.beginPath();
@@ -255,10 +261,11 @@ context.fillStyle = "#F4E910";
       context.lineTo(lightningXPos + 0, lightningYPos + 100);
       context.lineTo(lightningXPos + 40, lightningYPos);
       context.fill();
-      context.fillRect(lightningXPos - 15 ,lightningYPos + 250,30,120)
-      if(true){
-        
+      
+      if(xPos +  sqSize / 2 >= (lightningXPos - 15) && xPos - sqSize / 2 <= (lightningXPos + 15) && yPos +  sqSize / 2 >= (lightningYPos + 250) && yPos - sqSize / 2 <= lightningYPos + 370){
+        death()
       }
+//       context.fillRect(lightningXPos - 15 ,lightningYPos + 250,30,120)
   }
 context.fillStyle = "#F4E910";  
 }
@@ -266,6 +273,16 @@ context.fillStyle = "#F4E910";
 function reset() {
   lightning = 0;
 }
+
+function death() {
+    context.fillStyle = "#Fe00E0"; 
+    stage = 0;
+    yPos = 0;
+    xPos = 50;
+    stop();
+}
+
+//collision function
 
 // deal with the page getting resized or scrolled
 window.addEventListener("scroll", updatePosition, false);
