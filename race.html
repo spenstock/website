@@ -101,7 +101,7 @@ platform();
   
 cactus1.draw();  
   
-if (xPos >= 358 && yPos >= 330) {
+if (xPos >= 370 && yPos >= 330) {
   nextLevel();
 }  
         context.font = "56pt Helvetica";
@@ -143,14 +143,13 @@ if (xPos +  sqSize / 2 >= (x1) && xPos - sqSize / 2 <= (x1+x2) && yPos +  sqSize
 }
 
 function nextLevel() {
-  level = 1;
   context.font = "80pt Helvetica";
   context.textAlign = "center";
   context.textBaseline = "middle";
   context.fillStyle = "rgb(255,215,0)";
   context.fillText("YOU WIN", canvas.width/2, canvas.height/2, 800);
   context.fillText("MORE SOON", canvas.width/2, canvas.height/2 + 100, 800);
-  //window.location.href = 'https://spenstock.gq/card.html';
+  window.location.href = 'https://spenstock.gq/linerider.html';
 }
 
 function stop() {
