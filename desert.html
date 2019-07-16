@@ -3,7 +3,7 @@
 Created using JS Bin
 http://jsbin.com
 
-Copyright (c) 2019 by spenstock (http://jsbin.com/monabib/27/edit)
+Copyright (c) 2019 by spenstock (http://jsbin.com/vubimo/5/edit)
 
 Released under the MIT license: http://jsbin.mit-license.org
 -->
@@ -32,11 +32,11 @@ var mouseX = 0;
 var mouseY = 0;
 var clickSpeedRange = 65;
 var sqSize = 20;
-var xPos = 50;
+var xPos = 0;
 var yPos = 200;
 var dX = 0;
 var dY = 0;
-var oldMouseX = 50;
+var oldMouseX = 0;
 var oldMouseY = 200;
 var grav = 0.4;
 var Yspeed = 0;
@@ -44,22 +44,13 @@ var level = 0;
 var y1, y2, x1, x2 = 0;
 var stage = 0;
 var rainSpeed = 0;
-var lightning = 0;
-var lightningXPos = 0;
-var lightningYPos = 0;
-var lightningSound;
-
-var hauntedHouseSpawn = 0;
-var treeOneSpawn = 0;
-var treeTwoSpawn = 0;
-var treeThreeSpawn = 0;
-var door1 = 0;
+var test = 0;
 
 function init(){
 canvas.addEventListener("mousemove", setMousePosition, false);
 canvas.addEventListener("mousedown", mouseDown, false);
 document.body.addEventListener("mouseup", mouseUp, false);
-lightningSound = new sound("bounce.mp3");
+cactus1 = new cactus(360,330);
 requestAnimationFrame(animate);
 }
 function setMousePosition(e) {
@@ -104,35 +95,14 @@ if (yPos < 380) {
 vertSpeed = Yspeed-dY/15
 
 context.clearRect(0, 0, canvas.width, canvas.height);
-  
-if(stage < 2) {
-background();
-}
-  
-if(stage == 1 || stage === 0) {
-  rain();
-}
-  
-if(stage === 1) {
-  stageOne();
-}  
-if(stage == 3) {
-  stageThree();
-}
-platform();
-calculateMapPosition();
-  
-  
-// debug here:
-context.fillText(stage, canvas.width/2, canvas.height/2, 800);  
-  
-if (stage == 4) {
-  drawFlag(770,330);
-}  
-  
-if (xPos >= 758 && yPos >= 330 && stage == 4) {
-  nextLevel();
 
+// background();
+platform();
+  
+cactus1.draw();  
+  
+if (xPos >= 758 && yPos >= 330) {
+  nextLevel();
 }  
         context.font = "24pt Helvetica";
 //         context.fillText(vertSpeed, 50, 50, 150);
@@ -148,89 +118,37 @@ requestAnimationFrame(animate);
 }
 
 function background() {
-context.fillStyle = "#000027";  
+context.fillStyle = "#ECDD73";  
 context.fillRect(0, 0, canvas.width, canvas.height);
-}
-
-function stageOne() {
-context.fillStyle = "#000027"; 
-if(collision(200,130,400,300) || hauntedHouseSpawn == 1) {
-  context.fillStyle = "#4E2F2F"; 
-  hauntedHouseSpawn = 1;
-}
-  
-//build Haunted House  
-context.fillRect(200, 160, 30, 300); 
-context.fillRect(570, 160, 30, 300); 
-context.fillRect(300, 130, 200, 300);
-context.fillRect(200, 200, 400, 200);
-createDoor(390,330,20,40,3);
-  
-tree(65,340,treeOneSpawn);
-  if(collision(65,340,40,30)) {
-    treeOneSpawn = 1
-  }
-tree(120,340,treeTwoSpawn);
-  if(collision(120,340,40,30)) {
-    treeTwoSpawn = 1
-  }  
-tree(670,340,treeThreeSpawn);
-  if(collision(670,340,40,30)) {
-    treeThreeSpawn = 1
-  }  
-}
-
-function stageThree() {
- context.fillStyle = "#cc0000";  
- context.fillRect(0, 0, canvas.width, canvas.height); 
- createDoor(450,330,20,40,4);  
-}
-
-function tree(x1,y1,hit) {
-context.fillStyle = "#000027"; 
-if(hit) {
-context.fillStyle = "brown";   
-}
-context.fillRect(x1, y1, 12, 40); 
-if(hit) {
-context.fillStyle = "darkgreen";   
-}
-context.fillRect(x1-15, y1-30, 40, 30); 
-context.fillRect(x1-10, y1-50, 30, 30); 
-context.fillRect(x1, y1-60, 12, 30);
+context.fillStyle = "#F4E910";
 }
 
 function platform() {
-context.fillStyle = "#cccccc";    
+context.fillStyle = "#FFDD73";    
 createPlatform(0,370,800,40);
+drawFlag(770,330);
 }
 
 function createPlatform(x1,y1,x2,y2) {    
   context.fillRect(x1, y1, x2, y2);
   
 if (xPos +  sqSize / 2 >= (x1) && xPos - sqSize / 2 <= (x1+x2) && yPos +  sqSize / 2 >= (y1) && yPos - sqSize / 2 <= y1+y2) {
-  if(vertSpeed <= 0 && yPos +  sqSize / 2 <= y1 + 20) {
+  if(vertSpeed <= 0 && yPos +  sqSize / 2 <= y1 + 6) {
    yPos = y1 - 10;
    stop();  
   }
 }
 }
-function createDoor(x1,y1,x2,y2,to) {
-  context.fillStyle = "#000027";
-  context.fillRect(x1, y1, x2, y2); 
-  if(collision(x1,y1,x2,y2)) {
-  stage = to;
-  }
-}
 
 function nextLevel() {
+  level = 1;
   context.font = "80pt Helvetica";
   context.textAlign = "center";
   context.textBaseline = "middle";
   context.fillStyle = "rgb(255,215,0)";
   context.fillText("YOU WIN", canvas.width/2, canvas.height/2, 800);
   context.fillText("MORE SOON", canvas.width/2, canvas.height/2 + 100, 800);
-  //window.location.href = 'https://spenstock.gq/snow.html';
+  //window.location.href = 'https://spenstock.gq/card.html';
 }
 
 function stop() {
@@ -248,87 +166,7 @@ function drawFlag(x1,y1) {
       context.fill();
       context.fillStyle='grey';     
       context.fillRect(x1-2, y1, 2,40 );
-}
-
-function calculateMapPosition() {
-  if(xPos > 780 && stage < 2) {
-    oldMouseX -= 760;
-    oldMouseY = 350;
-    yPos = oldMouseY;
-    xPos = oldMouseX;
-    stage += 1;
-  }
-  if(xPos < 20 && stage > -2) {
-    oldMouseX += 760;
-    oldMouseY = 350;
-    yPos = oldMouseY;
-    xPos = oldMouseX;
-    stage -= 1;
-  }
-}  
-
-function rain() {
-context.fillStyle = "#FFFFFF";  
-  for (var j = 0; j < 20; j++) {
-    for (var i = 0; i < 20; i++) {
-     context.fillRect(Math.floor((Math.random() * 800) + 1), Math.floor((Math.random() * 800) + 1) + j * 40 - 400, 1, 8);   
-     rainSpeed += 0.007;
-    }
-  
-    if(rainSpeed + 40 > 400) {
-     rainSpeed = 0;
-    }
-  }
-context.fillStyle = "#F4E910";    
-  if(Math.floor((Math.random() * 170) + 1) == 9) {
-     lightning = 1;
-     setTimeout(reset, 750);
-     lightningSound.play();
-     lightningXPos = Math.floor((Math.random() * 800) + 1);
-     lightningYPos = Math.floor((Math.random() * 100) + 1);
-     //lightning random qualities next? i.e width/height
-  }
-  if(lightning == 1) {
-      context.beginPath();
-      context.moveTo(lightningXPos, lightningYPos);
-      context.lineTo(lightningXPos - 35, lightningYPos + 100);
-      context.lineTo(lightningXPos + 0, lightningYPos + 200);
-      context.lineTo(lightningXPos - 15, lightningYPos + 300);
-      context.lineTo(lightningXPos + 0, lightningYPos + 400);
-      context.lineTo(lightningXPos + 10, lightningYPos + 400);
-      context.lineTo(lightningXPos + 0, lightningYPos + 300);
-      context.lineTo(lightningXPos + 25, lightningYPos + 200);
-      context.lineTo(lightningXPos + 0, lightningYPos + 100);
-      context.lineTo(lightningXPos + 40, lightningYPos);
-      context.fill();
       
-      if(xPos +  sqSize / 2 >= (lightningXPos - 15) && xPos - sqSize / 2 <= (lightningXPos + 15) && yPos +  sqSize / 2 >= (lightningYPos + 250) && yPos - sqSize / 2 <= lightningYPos + 370){
-        death()
-      }
-//       context.fillRect(lightningXPos - 15 ,lightningYPos + 250,30,120)
-  }
-context.fillStyle = "#F4E910";  
-}
-
-function reset() {
-  lightning = 0;
-}
-
-function death() {
-    context.fillStyle = "#Fe00E0"; 
-    stage = 0;
-    yPos = 0;
-    xPos = 50;
-    stop();
-}
-
-//collision function
-function collision(x1,y1,x2,y2) {
-  if(xPos +  sqSize / 2 >= (x1) && xPos - sqSize / 2 <= (x1 + x2) && yPos +  sqSize / 2 >= (y1) && yPos - sqSize / 2 <= y1 + y2){
-        return true
-  }
-  else
-        return false
 }
 
 // deal with the page getting resized or scrolled
@@ -364,7 +202,6 @@ return {
 x: xPos,
 y: yPos
 };
-  
 } 
 function sound(src) {
   this.sound = document.createElement("audio");
@@ -378,6 +215,16 @@ function sound(src) {
   }
   this.stop = function(){
     this.sound.pause();
+  }
+}
+
+function cactus(x1,y1) {
+  this.draw = function(){
+    context.fillStyle = "darkgreen";  
+    context.fillRect(x1, y1, 12, 40); 
+  }
+  this.stop = function(){
+//     this.sound.pause();
   }
 }
 </script>

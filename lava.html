@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by spenstock (http://jsbin.com/vubimo/17/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html lang="en">
+ <head>
+   
+ <style>
+     #myCanvas {
+         border: 1px solid black;
+     }
+ </style>
+   <title>Canvas</title>
+  <meta charset="utf-8"/>
+ </head>
+<body onload="init();">
+    <canvas id="myCanvas" width="550" height="400">
+            Your browser does not support the canvas tag.
+    </canvas>
+<script id="jsbin-javascript">
+var canvas = document.querySelector("#myCanvas");
+var context = canvas.getContext("2d");
+
+var canvasPos = getPosition(canvas);
+var mouseX = 0;
+var mouseY = 0;
+var clickSpeedRange = 65;
+var sqSize = 20;
+var xPos = 0;
+var yPos = 200;
+var dX = 0;
+var dY = 0;
+var oldMouseX = 0;
+var oldMouseY = 200;
+var grav = 0.4;
+var Yspeed = 0;
+var level = 0;
+var y1, y2, x1, x2 = 0;
+var stage = 0;
+var rainSpeed = 0;
+var test = 0;
+var lavaHit = 0;
+var lavaUp = 0;
+var lavaSpeed= 0.09;
+var lava = 400;
+var smile = 0;
+
+function init(){
+canvas.addEventListener("mousemove", setMousePosition, false);
+canvas.addEventListener("mousedown", mouseDown, false);
+document.body.addEventListener("mouseup", mouseUp, false);
+cactus1 = new cactus(260,330);
+requestAnimationFrame(animate);
+}
+function setMousePosition(e) {
+mouseX = e.clientX - canvasPos.x;
+mouseY = e.clientY - canvasPos.y;
+}
+function mouseDown() {
+  mouseIsDown = 1;
+  oldMouseX = mouseX;
+  oldMouseY = mouseY;
+}
+function mouseUp() {
+  mouseIsDown = 0;
+}
+
+function animate() { 
+dX = oldMouseX - xPos;
+dY = oldMouseY - yPos;
+  
+if (dX >= clickSpeedRange){
+   dX = clickSpeedRange;
+}
+if (dX >= clickSpeedRange){
+   dX = clickSpeedRange;
+}  
+if (dY <= -clickSpeedRange){
+   dY = -clickSpeedRange;
+}
+if (dX <= -clickSpeedRange){
+   dX = -clickSpeedRange;
+}  
+  
+Yspeed -= grav;
+
+xPos += (dX / 15);
+yPos += (dY / 15);
+  
+if (yPos < 380) {
+   yPos -= Yspeed;
+}
+  
+vertSpeed = Yspeed-dY/15
+
+context.clearRect(0, 0, canvas.width, canvas.height);
+
+background();
+platform();
+  
+cactus1.draw();  
+context.fillStyle = "#EE6243";      
+context.fillRect(400, 390, 200, canvas.height);  
+if(collision(400,393,300,100)) {
+  lavaHit += 1;
+  yPos = 10;
+  xPos = 10;
+  stop();
+}
+  
+context.fillStyle = "darkgreen";    
+if (xPos >= 400 && yPos >= 390 && lavaHit > 4) {
+  nextLevel();
+}  
+        context.font = "46pt Helvetica";
+        context.fillText("lava jump game", 50, 150, 550);
+  
+        if(lavaHit >= 1) {
+        context.fillStyle = "red";    
+        context.font = "46pt Helvetica";
+        context.fillText(lavaHit, 20, 50, 550);
+        context.fillStyle = "darkgreen";    
+        }
+        if(lavaHit === 0) {
+        context.font = "26pt Helvetica";
+        context.fillText("coming soon", 180, 190, 550);
+        }
+        if(lavaHit === 0 && smile) {
+        context.font = "26pt Helvetica";
+        context.fillText("coming soon;)", 180, 190, 550);
+        }
+        if(lavaHit == 1) {  
+        context.font = "26pt Helvetica";
+        context.fillText("coming soon?", 180, 190, 550);
+        }  
+        if(lavaHit == 2) {  
+        context.font = "26pt Helvetica";
+        context.fillText("coming soon???", 180, 190, 550);
+        }  
+        if(lavaHit >= 3) {
+          createPlatform(350,350,20,10);
+          createPlatform(330,330,20,10);
+          createPlatform(310,310,20,10);
+          lavaUp = 1;
+        }
+        if(lavaUp) {
+          context.fillStyle = "red";    
+          context.fillRect(0, lava, canvas.width, canvas.height);   
+          lava = lava - lavaSpeed;
+        }
+        if(collision(0, lava, canvas.width, canvas.height)) {
+          lava = 400;
+          lavaHit = 0;
+          lavaUp = 0;
+          smile = 1;
+        }
+context.fillStyle = "#F4E910";
+context.fillRect(xPos - sqSize / 2,
+yPos - sqSize / 2,
+sqSize,
+sqSize);
+requestAnimationFrame(animate);  
+}
+
+function background() {
+context.fillStyle = "#222222";  
+context.fillRect(0, 0, canvas.width, canvas.height);
+context.fillStyle = "#F4E910";
+}
+
+function platform() {
+context.fillStyle = "#200022";    
+createPlatform(0,370,400,40);
+drawFlag(370,330);
+}
+
+function createPlatform(x1,y1,x2,y2) {    
+  context.fillRect(x1, y1, x2, y2);
+  
+if (xPos +  sqSize / 2 >= (x1) && xPos - sqSize / 2 <= (x1+x2) && yPos +  sqSize / 2 >= (y1) && yPos - sqSize / 2 <= y1+y2) {
+  if(vertSpeed <= 0 && yPos +  sqSize / 2 <= y1 + 16) {
+   yPos = y1 - 10;
+   stop();  
+  }
+}
+}
+
+function nextLevel() {
+  context.font = "80pt Helvetica";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillStyle = "rgb(255,215,0)";
+  context.fillText("YOU WIN", canvas.width/2, canvas.height/2, 800);
+  context.fillText("MORE SOON", canvas.width/2, canvas.height/2 + 100, 800);
+  window.location.href = 'https://spenstock.gq/card.html';
+}
+
+function stop() {
+   Yspeed = 0;
+   oldMouseY = yPos;
+   oldMouseX = xPos;
+}
+
+function collision(x1,y1,x2,y2) {
+  if(xPos +  sqSize / 2 >= (x1) && xPos - sqSize / 2 <= (x1 + x2) && yPos +  sqSize / 2 >= (y1) && yPos - sqSize / 2 <= y1 + y2){
+        return true
+  }
+  else
+        return false
+}
+
+function drawFlag(x1,y1) {
+      context.fillStyle='orange';   
+      context.beginPath();
+      context.moveTo(x1, y1);
+      context.lineTo(x1, y1 + 15);
+      context.lineTo(x1 + 20, y1 + 7.5);
+      context.fill();
+      context.fillStyle='grey';     
+      context.fillRect(x1-2, y1, 2,40 );
+}
+
+// deal with the page getting resized or scrolled
+window.addEventListener("scroll", updatePosition, false);
+window.addEventListener("resize", updatePosition, false);
+
+function updatePosition() {
+canvasPos = getPosition(canvas);
+}
+
+// Helper function to get an element's exact position
+function getPosition(el) {
+var xPos = 0;
+var yPos = 0;
+
+while (el) {
+if (el.tagName == "BODY") {
+// deal with browser quirks with body/window/document and page scroll
+var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+var yScroll = el.scrollTop || document.documentElement.scrollTop;
+
+xPos += (el.offsetLeft - xScroll + el.clientLeft);
+yPos += (el.offsetTop - yScroll + el.clientTop);
+} else {
+// for all other non-BODY elements
+xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+}
+
+el = el.offsetParent;
+}
+return {
+x: xPos,
+y: yPos
+};
+} 
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  }
+  this.stop = function(){
+    this.sound.pause();
+  }
+}
+
+function cactus(x1,y1) {
+  this.draw = function(){
+    context.fillStyle = "darkgreen";  
+    context.fillRect(x1, y1, 12, 40); 
+  }
+  this.stop = function(){
+//     this.sound.pause();
+  }
+}
+</script>
+</body>
+</html>
