@@ -3,7 +3,7 @@
 Created using JS Bin
 http://jsbin.com
 
-Copyright (c) 2019 by spenstock (http://jsbin.com/vubimo/4/edit)
+Copyright (c) 2019 by spenstock (http://jsbin.com/vubimo/18/edit)
 
 Released under the MIT license: http://jsbin.mit-license.org
 -->
@@ -20,7 +20,7 @@ Released under the MIT license: http://jsbin.mit-license.org
   <meta charset="utf-8"/>
  </head>
 <body onload="init();">
-    <canvas id="myCanvas" width="800" height="400">
+    <canvas id="myCanvas" width="600" height="400">
             Your browser does not support the canvas tag.
     </canvas>
 <script id="jsbin-javascript">
@@ -50,6 +50,7 @@ function init(){
 canvas.addEventListener("mousemove", setMousePosition, false);
 canvas.addEventListener("mousedown", mouseDown, false);
 document.body.addEventListener("mouseup", mouseUp, false);
+cactus1 = new cactus(260,330);
 requestAnimationFrame(animate);
 }
 function setMousePosition(e) {
@@ -93,19 +94,20 @@ if (yPos < 380) {
   
 vertSpeed = Yspeed-dY/15
 
- context.clearRect(0, 0, canvas.width, canvas.height);
+context.clearRect(0, 0, canvas.width, canvas.height);
 
 background();
-if(stage === 0 || 1) {
-  rain()
-}
 platform();
   
-if (xPos >= 758 && yPos >= 330) {
+cactus1.draw();  
+  
+if (xPos >= 358 && yPos >= 330) {
   nextLevel();
 }  
-        context.font = "24pt Helvetica";
-//         context.fillText(vertSpeed, 50, 50, 150);
+        context.font = "56pt Helvetica";
+        context.fillText("Tycoon", 50, 150, 550);
+        context.font = "26pt Helvetica";
+        context.fillText("coming soon", 150, 180, 550);
 //         context.fillText(level, 350, 50, 150);
 //         context.fillText(dX + "," + dY, 150, 150, 350); 
  
@@ -118,45 +120,15 @@ requestAnimationFrame(animate);
 }
 
 function background() {
-context.fillStyle = "Gainsboro";  
+context.fillStyle = "#222222";  
 context.fillRect(0, 0, canvas.width, canvas.height);
-// context.fillStyle = "#125711";   
-
-// context.fillRect(0-xPos/9, 0, 50, canvas.height);    
-// context.fillRect(100-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(200-(xPos/18), 0, 50, canvas.height);
-// context.fillRect(300-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(400-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(500-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(600-(xPos/12), 0, 50, canvas.height);  
-// context.fillRect(700-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(800-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(900-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(1000-(xPos/12), 0, 50, canvas.height);
-// context.fillStyle = "#016E00";  
-// context.fillRect(170-(xPos/4.5), 0, 57, canvas.height);
-// context.fillRect(223-(xPos/8), 0, 40, canvas.height);
-// context.fillRect(350-(xPos/6), 0, 155, canvas.height);
-// context.fillRect(690-(xPos/5), 0, 50, canvas.height);
-// context.fillRect(590-(xPos/7), 0, 50, canvas.height);
-// context.fillRect(790-(xPos/6), 0, 50, canvas.height);
 context.fillStyle = "#F4E910";
 }
 
 function platform() {
-context.fillStyle = "#F8F8F8";    
-createPlatform(0,370,800,40);
-drawFlag(770,330);
-  
-// if (yPos >= 380) {
-//    xPos = 20;
-//    yPos = 360;
-//    stop();
-// }
-// vine:
-// if (xPos +  sqSize / 2 > (200) && xPos - sqSize / 2 < (230) && yPos +  sqSize / 2 > (200) && yPos - sqSize / 2 < 230) {
-//    stop();  
-// }  
+context.fillStyle = "#200022";    
+createPlatform(0,370,400,40);
+drawFlag(370,330);
 }
 
 function createPlatform(x1,y1,x2,y2) {    
@@ -187,6 +159,14 @@ function stop() {
    oldMouseX = xPos;
 }
 
+function collision(x1,y1,x2,y2) {
+  if(xPos +  sqSize / 2 >= (x1) && xPos - sqSize / 2 <= (x1 + x2) && yPos +  sqSize / 2 >= (y1) && yPos - sqSize / 2 <= y1 + y2){
+        return true
+  }
+  else
+        return false
+}
+
 function drawFlag(x1,y1) {
       context.fillStyle='orange';   
       context.beginPath();
@@ -197,38 +177,6 @@ function drawFlag(x1,y1) {
       context.fillStyle='grey';     
       context.fillRect(x1-2, y1, 2,40 );
       
-}
-
-function rain() {
-context.fillStyle = "#FFFFFF";  
-test = Math.floor((Math.random() * 40) + 1);
-  for (var j = 0; j < 20; j++) {
-    for (var i = 0; i < 40; i++) {
-     context.fillRect(i * 40 - rainSpeed, rainSpeed + j * 40 - 400, 1, 4);   
-     rainSpeed += 0.002;
-     if(Math.floor((Math.random() * 40) + 1) == 1) {
-         rainSpeed
-     }
-    }
-    
-//     for (i = 0; i < 20; i++) {
-//      context.fillRect(Math.floor((Math.random() * 2) + 1) + i * 40 + 5 + rainSpeed/90, rainSpeed + 40, 1, 5);   
-//      rainSpeed += 0.1;
-//     }
-  
-  
-  
-  
-    if(rainSpeed > 400) {
-     rainSpeed = 0;
-    }
-  }
-   test = 0;
-  
-//   if(Math.floor((Math.random() * 10) + 1) == 9) {
-//      context.fillRect(Math.floor((Math.random() * 2) + 1) + i * 40,rainSpeed, 100, 500);   
-//   }
-context.fillStyle = "#F4E910";  
 }
 
 // deal with the page getting resized or scrolled
@@ -265,6 +213,30 @@ x: xPos,
 y: yPos
 };
 } 
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  }
+  this.stop = function(){
+    this.sound.pause();
+  }
+}
+
+function cactus(x1,y1) {
+  this.draw = function(){
+    context.fillStyle = "darkgreen";  
+    context.fillRect(x1, y1, 12, 40); 
+  }
+  this.stop = function(){
+//     this.sound.pause();
+  }
+}
 </script>
 </body>
 </html>

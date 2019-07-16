@@ -3,7 +3,7 @@
 Created using JS Bin
 http://jsbin.com
 
-Copyright (c) 2019 by spenstock (http://jsbin.com/vubimo/7/edit)
+Copyright (c) 2019 by spenstock (http://jsbin.com/vubimo/8/edit)
 
 Released under the MIT license: http://jsbin.mit-license.org
 -->
@@ -20,7 +20,7 @@ Released under the MIT license: http://jsbin.mit-license.org
   <meta charset="utf-8"/>
  </head>
 <body onload="init();">
-    <canvas id="myCanvas" width="800" height="400">
+    <canvas id="myCanvas" width="400" height="400">
             Your browser does not support the canvas tag.
     </canvas>
 <script id="jsbin-javascript">
@@ -106,6 +106,8 @@ if (xPos >= 358 && yPos >= 330) {
 }  
         context.font = "56pt Helvetica";
         context.fillText("LineRider", 50, 150, 550);
+        context.font = "26pt Helvetica";
+        context.fillText("coming soon", 150, 180, 550);
 //         context.fillText(level, 350, 50, 150);
 //         context.fillText(dX + "," + dY, 150, 150, 350); 
  
@@ -118,13 +120,13 @@ requestAnimationFrame(animate);
 }
 
 function background() {
-context.fillStyle = "#ECDD73";  
+context.fillStyle = "#222222";  
 context.fillRect(0, 0, canvas.width, canvas.height);
 context.fillStyle = "#F4E910";
 }
 
 function platform() {
-context.fillStyle = "#FFDD73";    
+context.fillStyle = "#200022";    
 createPlatform(0,370,400,40);
 drawFlag(370,330);
 }

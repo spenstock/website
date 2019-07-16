@@ -3,7 +3,7 @@
 Created using JS Bin
 http://jsbin.com
 
-Copyright (c) 2019 by spenstock (http://jsbin.com/vubimo/5/edit)
+Copyright (c) 2019 by spenstock (http://jsbin.com/vubimo/6/edit)
 
 Released under the MIT license: http://jsbin.mit-license.org
 -->
@@ -96,7 +96,7 @@ vertSpeed = Yspeed-dY/15
 
 context.clearRect(0, 0, canvas.width, canvas.height);
 
-// background();
+background();
 platform();
   
 cactus1.draw();  
@@ -155,6 +155,14 @@ function stop() {
    Yspeed = 0;
    oldMouseY = yPos;
    oldMouseX = xPos;
+}
+
+function collision(x1,y1,x2,y2) {
+  if(xPos +  sqSize / 2 >= (x1) && xPos - sqSize / 2 <= (x1 + x2) && yPos +  sqSize / 2 >= (y1) && yPos - sqSize / 2 <= y1 + y2){
+        return true
+  }
+  else
+        return false
 }
 
 function drawFlag(x1,y1) {
