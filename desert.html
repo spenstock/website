@@ -32,12 +32,12 @@ var mouseX = 0;
 var mouseY = 0;
 var clickSpeedRange = 65;
 var sqSize = 20;
-var xPos = 0;
-var yPos = 200;
+var xPos = 50;
+var yPos = 300;
 var dX = 0;
 var dY = 0;
-var oldMouseX = 0;
-var oldMouseY = 200;
+var oldMouseX = 50;
+var oldMouseY = 300;
 var grav = 0.4;
 var Yspeed = 0;
 var level = 0;
@@ -45,6 +45,9 @@ var y1, y2, x1, x2 = 0;
 var stage = 0;
 var rainSpeed = 0;
 var test = 0;
+var deathCount = 0;
+var timeout = 0;
+var deathPullup = 0;
 
 function init(){
 canvas.addEventListener("mousemove", setMousePosition, false);
@@ -100,10 +103,24 @@ background();
 platform();
   
 cactus1.draw();  
+cactus1.hit();  
   
-if (xPos >= 770 && yPos >= 330) {
+if(deathPullup) {
+  context.fillStyle = "brown";
+  context.fillText("Death Count: " + deathCount, 50, 50, 150);
+} 
+if(stage === 0){
+drawFlag(670,330);  
+}
+if(stage == -1){
+drawFlag(402,330);  
+}
+if (collision(400,330,10,40) && stage == -1) {
   nextLevel();
 }  
+
+calculateMapPosition();
+  
         context.font = "24pt Helvetica";
 //         context.fillText(vertSpeed, 50, 50, 150);
 //         context.fillText(level, 350, 50, 150);
@@ -120,13 +137,14 @@ requestAnimationFrame(animate);
 function background() {
 context.fillStyle = "#ECDD73";  
 context.fillRect(0, 0, canvas.width, canvas.height);
+context.fillStyle = "#ffdb00";    
+context.fillRect(740, 0, 60, 50);
 context.fillStyle = "#F4E910";
 }
 
 function platform() {
 context.fillStyle = "#FFDD73";    
 createPlatform(0,370,800,40);
-drawFlag(770,330);
 }
 
 function createPlatform(x1,y1,x2,y2) {    
@@ -139,6 +157,23 @@ if (xPos +  sqSize / 2 >= (x1) && xPos - sqSize / 2 <= (x1+x2) && yPos +  sqSize
   }
 }
 }
+  
+function calculateMapPosition() {
+  if(xPos > 780 && stage < 2) {
+    oldMouseX -= 760;
+    oldMouseY = 350;
+    yPos = oldMouseY;
+    xPos = oldMouseX;
+    stage += 1;
+  }
+  if(xPos < 20 && stage > -2) {
+    oldMouseX += 760;
+    oldMouseY = 350;
+    yPos = oldMouseY;
+    xPos = oldMouseX;
+    stage -= 1;
+  }
+}    
 
 function nextLevel() {
   context.font = "80pt Helvetica";
@@ -154,6 +189,14 @@ function stop() {
    Yspeed = 0;
    oldMouseY = yPos;
    oldMouseX = xPos;
+}
+function death() {
+   Yspeed = 0;
+   xPos = 90;
+   yPos = 300;
+   oldMouseY = yPos;
+   oldMouseX = xPos;
+   deathCount += 1;
 }
 
 function collision(x1,y1,x2,y2) {
@@ -175,6 +218,10 @@ function drawFlag(x1,y1) {
       context.fillRect(x1-2, y1, 2,40 );
       
 }
+  
+function reset() {
+  deathPullup = 0;  
+}  
 
 // deal with the page getting resized or scrolled
 window.addEventListener("scroll", updatePosition, false);
@@ -230,8 +277,13 @@ function cactus(x1,y1) {
     context.fillStyle = "darkgreen";  
     context.fillRect(x1, y1, 12, 40); 
   }
-  this.stop = function(){
-//     this.sound.pause();
+  this.hit = function(){
+    if(collision(x1,y1,12,40)) {
+       deathPullup = 1;
+       timeout = setTimeout(reset, 800);
+       stop();
+       death();
+    }
   }
 }
 </script>

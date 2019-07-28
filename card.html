@@ -7,7 +7,6 @@ Copyright (c) 2019 by spenstock (http://jsbin.com/cerapik/17/edit)
 
 Released under the MIT license: http://jsbin.mit-license.org
 -->
-<meta name="robots" content="noindex">
 <html lang="en">
  <head>
    
@@ -54,6 +53,7 @@ var change = 19;
 var cards = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var clicked = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var color = [1, 3, 2, 4, 7, 6, 8, 5, 1, 5, 4, 2, 3, 7, 8, 6];
+var licked = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var colorBox = 88;
 var winTotal = 0;
 
@@ -85,7 +85,7 @@ win();
   
 //          DEBUG TOOLS
 //          context.fillStyle = "#F4E910";
-//          context.font = "24pt Helvetica";
+//         context.font = "24pt Helvetica";
 //          context.fillText(mouseX + "," + mouseY, 50, 50, 150);
 //          context.fillText(mouseIsDown, 50, 350, 150);
 //
@@ -97,8 +97,8 @@ win();
 //          for (m = 0; m < (size * size); m++) {
 //          context.fillText(clicked[m], 50 + space, 180, 150);
 //          space += 20
-//          } 
-//          space = 0;
+//         } 
+//        space = 0;
   
   
 requestAnimationFrame(animate);  
@@ -129,38 +129,38 @@ function createCards() {
   for (m = 0; m < (size * size); m++) {
         r = m % size;
         e = (m - r) / size;
-      if(clicked[m] == 1){
+      if(clicked[m] == 2 || licked[m] == 1) {
+        context.fillStyle = "#FFFFFF";
+        context.fillRect(z + (r * 100),x + (e * 100),c,v);         
+      }
+     else if (clicked[m] == 1 && licked[m] != 1){
         //if m = 9 then color red etc
         if (m === 0 || m == 8) {
           context.fillStyle = "#0EEEEE";
         }
-        if (m === 2 || m == 11) {
+        if (m == 2 || m == 11) {
           context.fillStyle = "#0EEE33";
         }
-        if (m === 1 || m == 12) {
+        if (m == 1 || m == 12) {
           context.fillStyle = "#0E21EE";
         }
-        if (m === 3 || m == 10) {
+        if (m == 3 || m == 10) {
           context.fillStyle = "#07777E";
         }
-        if (m === 7 || m == 9) {
+        if (m == 7 || m == 9) {
           context.fillStyle = "#0EE666";
         }
-        if (m === 4 || m == 13) {
+        if (m == 4 || m == 13) {
           context.fillStyle = "#00cc33";
         }
-        if (m === 5 || m == 15) {
+        if (m == 5 || m == 15) {
           context.fillStyle = "#0000ff";
         }
-        if (m === 6 || m == 14) {
+        if (m == 6 || m == 14) {
           context.fillStyle = "#0E4321";
         }
         context.fillRect(z + (r * 100),x + (e * 100),c,v); 
-      }
-      if(clicked[m] == 2) {
-        context.fillStyle = "#FFFFFF";
-        context.fillRect(z + (r * 100),x + (e * 100),c,v);         
-      }
+     }
   }
   
 }
@@ -169,34 +169,50 @@ function isClicked() {
   if(clicked[0] && clicked[8]) {
     clicked[0] = 2;
     clicked[8] = 2;
+    licked[0] = 1;
+    licked[8] = 1;
   }
   if(clicked[2] && clicked[11]) {
     clicked[2] = 2;
     clicked[11] = 2;
+    licked[2] = 1;
+    licked[11] = 1;
   }
   if(clicked[1] && clicked[12]) {
     clicked[1] = 2;
     clicked[12] = 2;
+    licked[1] = 1;
+    licked[12] = 1;
   }
   if(clicked[3] && clicked[10]) {
     clicked[3] = 2;
     clicked[10] = 2;
+    licked[3] = 1;
+    licked[10] = 1;
   }
   if(clicked[7] && clicked[9]) {
     clicked[7] = 2;
     clicked[9] = 2;
+    licked[7] = 1;
+    licked[9] = 1;
   }
   if(clicked[4] && clicked[13]) {
     clicked[4] = 2;
     clicked[13] = 2;
+    licked[4] = 1;
+    licked[13] = 1;
   }
   if(clicked[5] && clicked[15]) {
     clicked[5] = 2;
     clicked[15] = 2;
+    licked[5] = 1;
+    licked[15] = 1;
   }
   if(clicked[6] && clicked[14]) {
     clicked[6] = 2;
     clicked[14] = 2;
+    licked[6] = 1;
+    licked[14] = 1;
   }
 }
 function colorCards(z,x,c,v,q,t) {

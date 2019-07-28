@@ -99,16 +99,16 @@ context.clearRect(0, 0, canvas.width, canvas.height);
 background();
 platform();
   
-cactus1.draw();  
+// cactus1.draw();  
   
-if (xPos >= 370 && yPos >= 330) {
-  nextLevel();
-}  
+        context.fillStyle = "darkgreen";  
         context.font = "56pt Helvetica";
         context.fillText("tower defense", 50, 150, 550);
         context.font = "26pt Helvetica";
         context.fillText("coming soon", 180, 190, 550);
- 
+if (xPos >= 370 && yPos >= 330) {
+  nextLevel();
+}   
 context.fillStyle = "#F4E910";
 context.fillRect(xPos - sqSize / 2,
 yPos - sqSize / 2,

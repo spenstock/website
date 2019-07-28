@@ -101,16 +101,16 @@ platform();
   
 cactus1.draw();  
   
-if (xPos >= 370 && yPos >= 330) {
-  nextLevel();
-}  
+        context.fillStyle = "darkgreen";  
         context.font = "56pt Helvetica";
         context.fillText("LineRider", 50, 150, 550);
         context.font = "26pt Helvetica";
         context.fillText("coming soon", 150, 180, 550);
 //         context.fillText(level, 350, 50, 150);
 //         context.fillText(dX + "," + dY, 150, 150, 350); 
- 
+if (xPos >= 370 && yPos >= 330) {
+  nextLevel();
+}   
 context.fillStyle = "#F4E910";
 context.fillRect(xPos - sqSize / 2,
 yPos - sqSize / 2,
