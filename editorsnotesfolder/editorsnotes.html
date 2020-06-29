@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">  
+  
+<head>
+  <div id="back"></div>
+  <meta charset="utf-8">
+  <title>Stock</title>
+  <style>
+    header, footer {
+      margin: 0.2em;
+      padding: 0.5em;
+      text-align: center;
+    }  
+    h3 {
+        font-size: 14px;
+    }
+    h2 {
+      line-height: 2px;
+    }
+    .row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+    }    
+    nav {
+    margin: 0.2em;
+	  min-height: 8em;
+	  padding: 0.5em;  
+    width: 15%;
+    background-color: white;
+    text-align: center;  
+    line-height: 20px;
+    font-size: 11px;
+    }
+    .column {
+	margin: 0.2em;
+	min-height: 8em;
+	padding: 1em;
+	width: 65%;
+    background-color: rgb(255, 255, 215);  
+    }
+    aside {
+	margin: 0.2em;
+	min-height: 8em;
+	padding: 1em;
+	width: 15%;
+    /*background-color: rgb(251, 245, 245); */
+    }
+    a {
+      text-decoration: none;
+    }
+    a:hover {
+      color: red;
+    }
+  
+    p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+    color: black;
+    }
+/*     #back {
+    position: fixed;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(white,  #77c9FF, white);
+    z-index: -1;
+    } */
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Blog</h1>    
+  </header>
+  
+<div class="row">
+  <nav>    
+    <h3>Posts:</h3><br>          
+    <strong>
+    <a href="#7/27/19">Bug Fixes</a> <br>
+    <a href="#7/13/19">Minor Fix</a> <br>
+    <a href="#7/11/19">Snow and Haunted</a> <br>
+    <a href="#7/04/19">Card</a> <br>
+    <a href="#7/01/19">SICP</a> <br>
+    <a href="#6/26/19">Jungle</a> <br>
+    <a href="#6/23/19">Beginnings and Blog</a> <br>
+    <a href="#6/22/19">Beginnings and Submarines</a>
+    </strong>
+  </nav>
+  <aside>
+    <h4>TODO</h4>
+    <p>
+      update editors notes
+      anagram game
+      racing game
+      web api stuff
+
+
+
+    </p>
+
+
+
+
+  </aside>
+  <main class="column">
+ <!-- <article><h2><a id=7/01/19>Beginnings and Blog</a></h2>
+    <h4>7/01/19</h4>
+    <p>Blog was created, looks good I would say. <br>
+    Still need to work with colors...<br>
+    -Spencer</p>
+  </article> -->
+<article><h2><a id=7/27/19>Bug Fixes</a></h2>
+    <h4>7/27/19</h4>
+    <p>Motified card game color display, as when the cards were already matched, they would incorrectly display their colors. <br>
+    Fixed up desert to make it more playable.<br> 
+    Fixed up jungle's bezier curve values for effective jumping.<br> 
+    -Spencer</p>
+</article>
+<article><h2><a id=7/13/19>Minor Fix</a></h2>
+    <h4>7/13/19</h4>
+    <p>Fixed some movement with Submarine to make it cleaner.<br>
+    Also added stages to Haunted.<br>
+    -Spencer</p>
+</article>
+<article><h2><a id=7/11/19>Snow and Haunted</a></h2>
+    <h4>7/11/19</h4>
+    <p>Snow and Haunted have been created, I actually made Snow after having difficulties with the rain in Haunted, as it ended up looking like snow. <br>
+    Haunted includes some rain and the platforming from jungle.<br>
+    My current plan is to make it into a Haunted House type game, but we'll see<br>
+    Up to this point, I have been programing in a more process oriented view in comparison to a more effective object oriented programing style.<br>
+    It has gone well, but to move forward, this new style is just much more effective.<br>
+    I'll be learning this next to make these games better.<br>
+    Progress also has been made with Card, it has been cleaned up (debuging tools removed & colors added to the cards).<br>
+    Recently, I also finished 6.0001 for MIT online, it has helped me program definitely.<br>
+    -Spencer</p>
+  </article>
+  <article><h2><a id=7/04/19>Card</a></h2>
+    <h4>7/04/19</h4>
+    <p>Card is up, and <a href="https://web.mit.edu/alexmv/6.037/sicp.pdf" target="_blank"> sicp </a> is done. <br>
+    I left all the debuging tools up for card, I'm sure you guys are going to enjoy that.<br>
+    I honestly got lazy towards the end, I didn't make it as general as it needed to be, will work on that soon.<br>
+    Happy July 4th everyone<br>
+    -Spencer</p>
+  </article>
+  <article><h2><a id=7/01/19>SICP</a></h2>
+    <h4>7/01/19</h4>
+    <p>Progress has been slow, looking at <a href="https://web.mit.edu/alexmv/6.037/sicp.pdf" target="_blank"> sicp </a> for the time being.<br>
+    Will add more jungle levels next, and the card game previously mentioned is going well!<br>
+    -Spencer</p>
+  </article>
+  <article><h2><a id=6/26/19>Jungle</a></h2>
+    <h4>6/26/19</h4>
+    <p>Jungle was started two days ago and finished today. <br>
+    It looks really good, the background makes the game look really good. <br>
+    Most of the time I spent was on the gravity mechanic of the game. This took a while (probably 3 hours) of messing around with values and setting up the functions for effective gravity.<br>
+    I should add more levels to jungle, but I think I will move on for now. I made the ability to add.<br>
+    Submarine was also completed in its early stages, looking crisp I would say.<br>
+    The next game I think will be "card" a card game, but I'm not sure and also promised myself to learn more before I start the next one. <br>
+    -Spencer</p>
+  </article>
+  <article><h2><a id=6/23/19>Beginnings and Blog</a></h2>
+    <h4>6/23/19</h4>
+    <p>Blog was created, looks good I would say. <br>
+    Work was done today with the game to make the screen move when the box was near the edges in submarine game. <br>
+    That looks good too.<br>
+    Still need to work with colors...<br>
+    -Spencer</p>
+  </article>
+  <article>
+    <h2><a id=6/22/19>Beginnings and Submarines</a></h2>
+    <h4>6/22/19</h4>
+    <p>So I decided to create editor's notes to talk about what's up<br>
+    The current plan is to create an arcade on this website, using the square blocks premade<br>
+    <img src="Capture.JPG" alt="website" width="500" height="333"> <br>
+    Probably spent 8 hours on the first game today, with probably 4.5 the day before that<br>
+    and 6 before that. So we're at like 18.5 hours which has gone crazy fast. <br>
+    Was up till 3 last night so I'm focused on this project.<br>
+    Most of this time was spent on the movement of the submarine, and how it moved with the mouse<br>
+    some works in progress were: <a href="demo1.html" target="_blank"> before mouse </a> and
+    <a href="demo2.html" target="_blank"> before ship and basic detail </a> <br>
+    Currently, I don't like how it looks, as you can just explore the entire map by just clicking near the top and the bottom of the canvas.<br/>
+    There is just too much range. The next step will be keeping the submarine in the center of the screen, and just move the background.<br/>
+    I might get some hardware projects up here, stay tuned.<br>
+    Thanks for reading<br>
+    -Spencer</p>
+  </article>
+  </main>  
+  <!-- <aside>
+    <h1>To Do:<br></h1>
+    <h3>Submarine<br></h3>
+      <p>
+      -better images<br>
+      </p>
+      <h3>Jungle<br></h3>
+      <p>-more levels<br>
+          -beizer curves<br>
+          -add fruit/score maybe <br>
+          -platforms that move with xPos and trees
+      </p>
+      <h3>Linerider<br></h3>
+      <p>start</p>
+  </aside> -->
+</div>
+  
+  <footer>June 2019 @ spenstock</footer>  
+ </body>
+  
+</html>
+ 

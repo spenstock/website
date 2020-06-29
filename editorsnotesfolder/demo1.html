@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   
+ <style>
+     #myCanvas {
+         border: 1px solid black;
+     }
+ </style>
+   <title>Canvas</title>
+  <meta charset="utf-8"/>
+ </head>
+<body onload="init();">
+    <canvas id="myCanvas" width="400" height="400">
+            Your browser does not support the canvas tag.
+    </canvas>
+<script id="jsbin-javascript">
+var canvas, ctx;
+   var rectangleX = 0;
+   var rectangleY = 0;
+   var speed = 1;
+   var Yspeed = 3;
+   var down = 0;
+   var hitWeed = 0;
+   var gold = 0;
+  
+   function init() {
+     // This function is called after the page is loaded
+     // 1 - Get the canvas
+     canvas = document.getElementById('myCanvas');
+     // 2 - Get the context
+     ctx=canvas.getContext('2d');
+     // 3 - we can draw
+     requestAnimationFrame(activeSquare);
+   }
+
+
+   function activeSquare() {
+     drawSomething();
+     displayGold()
+     hitObject();
+     
+
+     ctx.fillRect(rectangleX,rectangleY,60,60);
+     rectangleX += speed;
+     rectangleY += Yspeed;
+
+     
+     if ((rectangleX >= 340) || (rectangleX <= 0)) {
+       speed = -speed;
+     }
+     if ((rectangleY <= 0) || (rectangleY >= 350)) {
+       Yspeed = -Yspeed;
+     }
+     if (rectangleY > 100){
+       down += Yspeed;
+     }
+     if (rectangleY <= 100) {
+       down = 0;
+     }
+     
+     requestAnimationFrame(activeSquare);
+   }
+   function drawSomething() {
+     // draw a red rectangle
+     // animate
+
+     ctx.fillStyle='#F1F1F0';     
+     ctx.fillRect(0,0 - down, canvas.width, canvas.height);
+     
+     ctx.fillStyle='skyblue';
+     ctx.fillRect(0,100 - down,canvas.width,290);
+     
+     ctx.fillStyle='#3366FF';
+     ctx.fillRect(0,200 - down,canvas.width,300);
+     
+     ctx.fillStyle='#0000FF';
+     ctx.fillRect(0,300 - down,canvas.width,canvas.height);
+     
+     drawShip();
+     if (hitWeed) {
+       backpackWeed();
+     }
+     drawWeed();
+   }
+
+   function drawShip() {
+     ctx.fillStyle='#6E2C00';
+     ctx.fillRect(canvas.width/2 - 30,65 - down,80,35);
+     
+     ctx.fillStyle='#6E2C00';
+     ctx.fillRect(canvas.width/2 - 40,65 - down,100,20);  
+     
+     ctx.fillStyle='#6E2C00';
+     ctx.fillRect(canvas.width/2 + 5,5 - down,10,95);
+   }
+
+   function drawWeed() {
+     ctx.fillStyle='green';
+     ctx.fillRect(canvas.width/2 +5,620 - down,20,20);
+   }
+
+   function hitObject() {
+        ctx.fillStyle='yellow';
+        if(rectangleX < canvas.width/2 + 70 && rectangleX > canvas.width/2 - 50){
+          ctx.fillStyle='green';  
+          if(rectangleY > 485 - down) {
+            ctx.fillStyle='purple';
+            hitWeed = 1;
+          }
+          if(rectangleY < 65 - down) {
+            ctx.fillStyle='red';
+            if(hitWeed > 0){
+              gold += 1;
+              hitWeed = 0;
+            }
+          }
+        }    
+     
+   }
+function backpackWeed() {
+     ctx.fillStyle='green';
+     ctx.fillRect(10,10,20,20);  
+}
+function displayGold() {
+     ctx.font = "24pt Helvetica";
+     ctx.textAlign = "center";
+     ctx.textBaseline = "middle";
+     ctx.fillStyle = "	rgb(255,215,0)";
+//      ctx.clearRect(0, 0, canvas.width, canvas.height);
+     ctx.fillText(gold, 50, 50, 50);
+
+}
+</script>
+
+
+
+<script id="jsbin-source-javascript" type="text/javascript">   var canvas, ctx;
+   var rectangleX = 0;
+   var rectangleY = 0;
+   var speed = 1;
+   var Yspeed = 3;
+   var down = 0;
+   var hitWeed = 0;
+   var gold = 0;
+  
+   function init() {
+     // This function is called after the page is loaded
+     // 1 - Get the canvas
+     canvas = document.getElementById('myCanvas');
+     // 2 - Get the context
+     ctx=canvas.getContext('2d');
+     // 3 - we can draw
+     requestAnimationFrame(activeSquare);
+   }
+
+
+   function activeSquare() {
+     drawSomething();
+     displayGold()
+     hitObject();
+     
+
+     ctx.fillRect(rectangleX,rectangleY,60,60);
+     rectangleX += speed;
+     rectangleY += Yspeed;
+
+     
+     if ((rectangleX >= 340) || (rectangleX <= 0)) {
+       speed = -speed;
+     }
+     if ((rectangleY <= 0) || (rectangleY >= 350)) {
+       Yspeed = -Yspeed;
+     }
+     if (rectangleY > 100){
+       down += Yspeed;
+     }
+     if (rectangleY <= 100) {
+       down = 0;
+     }
+     
+     requestAnimationFrame(activeSquare);
+   }
+   function drawSomething() {
+     // draw a red rectangle
+     // animate
+
+     ctx.fillStyle='#F1F1F0';     
+     ctx.fillRect(0,0 - down, canvas.width, canvas.height);
+     
+     ctx.fillStyle='skyblue';
+     ctx.fillRect(0,100 - down,canvas.width,290);
+     
+     ctx.fillStyle='#3366FF';
+     ctx.fillRect(0,200 - down,canvas.width,300);
+     
+     ctx.fillStyle='#0000FF';
+     ctx.fillRect(0,300 - down,canvas.width,canvas.height);
+     
+     drawShip();
+     if (hitWeed) {
+       backpackWeed();
+     }
+     drawWeed();
+   }
+
+   function drawShip() {
+     ctx.fillStyle='#6E2C00';
+     ctx.fillRect(canvas.width/2 - 30,65 - down,80,35);
+     
+     ctx.fillStyle='#6E2C00';
+     ctx.fillRect(canvas.width/2 - 40,65 - down,100,20);  
+     
+     ctx.fillStyle='#6E2C00';
+     ctx.fillRect(canvas.width/2 + 5,5 - down,10,95);
+   }
+
+   function drawWeed() {
+     ctx.fillStyle='green';
+     ctx.fillRect(canvas.width/2 +5,620 - down,20,20);
+   }
+
+   function hitObject() {
+        ctx.fillStyle='yellow';
+        if(rectangleX < canvas.width/2 + 70 && rectangleX > canvas.width/2 - 50){
+          ctx.fillStyle='green';  
+          if(rectangleY > 485 - down) {
+            ctx.fillStyle='purple';
+            hitWeed = 1;
+          }
+          if(rectangleY < 65 - down) {
+            ctx.fillStyle='red';
+            if(hitWeed > 0){
+              gold += 1;
+              hitWeed = 0;
+            }
+          }
+        }    
+     
+   }
+function backpackWeed() {
+     ctx.fillStyle='green';
+     ctx.fillRect(10,10,20,20);  
+}
+function displayGold() {
+     ctx.font = "24pt Helvetica";
+     ctx.textAlign = "center";
+     ctx.textBaseline = "middle";
+     ctx.fillStyle = "	rgb(255,215,0)";
+//      ctx.clearRect(0, 0, canvas.width, canvas.height);
+     ctx.fillText(gold, 50, 50, 50);
+
+}
+
+</script></body>
+</html>

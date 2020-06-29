@@ -70,5 +70,9 @@
   height: 300px;
   background-color:rgb(219, 107, 79);
 }
-
-#mapid { height: 180px; }
+.box13 {
+  display: inline-block;
+  width: 300px;
+  height: 300px;
+  background-color:rgb(61, 189, 228);
+}
