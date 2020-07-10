@@ -1,12 +1,4 @@
 <!DOCTYPE html>
-<!--
-Created using JS Bin
-http://jsbin.com
-
-Copyright (c) 2019 by spenstock (http://jsbin.com/vubimo/4/edit)
-
-Released under the MIT license: http://jsbin.mit-license.org
--->
 <meta name="robots" content="noindex">
 <html lang="en">
  <head>
@@ -96,14 +88,23 @@ vertSpeed = Yspeed-dY/15
  context.clearRect(0, 0, canvas.width, canvas.height);
 
 background();
-if(stage === 0 || 1) {
+if(stage <= 10) {
   rain()
 }
 platform();
   
-if (xPos >= 758 && yPos >= 330) {
+if (xPos >= 758 && yPos >= 330 && stage === 7) {
   nextLevel();
 }  
+if(stage == 7) {
+  drawFlag(770,330);
+}
+if(xPos >= 758 && yPos >= 330) {
+  ++stage;
+  yPos = 350;
+  xPos = 0;
+  stop();
+}
         context.font = "24pt Helvetica";
 //         context.fillText(vertSpeed, 50, 50, 150);
 //         context.fillText(level, 350, 50, 150);
@@ -118,45 +119,37 @@ requestAnimationFrame(animate);
 }
 
 function background() {
-context.fillStyle = "Gainsboro";  
+  if(stage > -1) {
+    context.fillStyle = "#EAE8E7"; 
+}
+    if(stage > 0) {
+    context.fillStyle = "#E0DCDB "; 
+}
+  if(stage > 1) {
+    context.fillStyle = "#D1CCCB "; 
+}
+  if(stage > 2) {
+    context.fillStyle = "#C4C1C1 "; 
+}
+  if(stage > 3) {
+    context.fillStyle = "#BCC4C1  "; 
+}
+  if(stage > 4) {
+    context.fillStyle = "#B5BDBA "; 
+}
+  if(stage > 5) {
+    context.fillStyle = "#AEB6B4  "; 
+}
+  if(stage > 6) {
+    context.fillStyle = "#A1A9A6  "; 
+}
 context.fillRect(0, 0, canvas.width, canvas.height);
-// context.fillStyle = "#125711";   
-
-// context.fillRect(0-xPos/9, 0, 50, canvas.height);    
-// context.fillRect(100-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(200-(xPos/18), 0, 50, canvas.height);
-// context.fillRect(300-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(400-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(500-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(600-(xPos/12), 0, 50, canvas.height);  
-// context.fillRect(700-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(800-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(900-(xPos/12), 0, 50, canvas.height);
-// context.fillRect(1000-(xPos/12), 0, 50, canvas.height);
-// context.fillStyle = "#016E00";  
-// context.fillRect(170-(xPos/4.5), 0, 57, canvas.height);
-// context.fillRect(223-(xPos/8), 0, 40, canvas.height);
-// context.fillRect(350-(xPos/6), 0, 155, canvas.height);
-// context.fillRect(690-(xPos/5), 0, 50, canvas.height);
-// context.fillRect(590-(xPos/7), 0, 50, canvas.height);
-// context.fillRect(790-(xPos/6), 0, 50, canvas.height);
 context.fillStyle = "#F4E910";
 }
 
 function platform() {
 context.fillStyle = "#F8F8F8";    
 createPlatform(0,370,800,40);
-drawFlag(770,330);
-  
-// if (yPos >= 380) {
-//    xPos = 20;
-//    yPos = 360;
-//    stop();
-// }
-// vine:
-// if (xPos +  sqSize / 2 > (200) && xPos - sqSize / 2 < (230) && yPos +  sqSize / 2 > (200) && yPos - sqSize / 2 < 230) {
-//    stop();  
-// }  
 }
 
 function createPlatform(x1,y1,x2,y2) {    
@@ -177,7 +170,6 @@ function nextLevel() {
   context.textBaseline = "middle";
   context.fillStyle = "rgb(255,215,0)";
   context.fillText("YOU WIN", canvas.width/2, canvas.height/2, 800);
-  context.fillText("MORE SOON", canvas.width/2, canvas.height/2 + 100, 800);
   window.location.href = 'https://spenstock.gq/desert.html';
 }
 
@@ -196,12 +188,11 @@ function drawFlag(x1,y1) {
       context.fill();
       context.fillStyle='grey';     
       context.fillRect(x1-2, y1, 2,40 );
-      
 }
 
 function rain() {
 context.fillStyle = "#FFFFFF";  
-test = Math.floor((Math.random() * 40) + 1);
+test = Math.floor((Math.random() * 8) + 1);
   for (var j = 0; j < 20; j++) {
     for (var i = 0; i < 40; i++) {
      context.fillRect(i * 40 - rainSpeed, rainSpeed + j * 40 - 400, 1, 4);   
